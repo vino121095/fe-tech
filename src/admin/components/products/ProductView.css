@@ -1,0 +1,85 @@
+.productViewContainer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    margin: -10px 8px 20px 5px !important;
+}
+
+.productViewCard {
+    width: 320px;
+    height: 420px;
+    display: flex;
+    flex-wrap: wrap;
+    padding: 15px;
+    border-radius: 10px;
+    background: #FFFFFF;
+    margin: 15px 30px;
+
+}
+
+.productViewCard img {
+    width: 70%;
+    height: 170px;
+    object-fit: cover;
+    border-radius: 6px;
+    margin-bottom: 10px;
+}
+
+.productViewCard p {
+    margin-top: 30px;
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.line{
+    width: 350px !important;
+    border-bottom: 0.5px solid #cac9c9;
+    margin-top: -20px !important;
+}
+
+.productMrp h4{
+    width: 100%;
+    font-weight: 700;
+    font-size: 14px !important;
+    margin-top: 40px !important;
+    margin-left: 2px;
+}
+
+.brandName{
+    font-size: 15px;
+    font-weight: 400;
+    margin-top: 8px;
+    margin-left: -82px;
+}
+
+.productViewCardBtn {
+    width: 130px;
+    height: 30.5px;
+    font-size: 14px !important;
+    font-weight: 700;
+    background: #DEE6EF;
+    color: black;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    margin-left: -1px !important;
+    margin-top: 15px;
+}
+
+.btnShare{
+    display: flex;
+}
+
+.shareIcon{
+    margin-left: 120px;
+    background: #f6f6f7;
+    padding: 5px 10px;
+    color: #0024FF;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 8px !important;
+    justify-content: center;
+    align-items: center !important;
+    margin-top: 15px;
+}

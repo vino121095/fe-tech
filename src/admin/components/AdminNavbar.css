@@ -1,0 +1,32 @@
+
+.navbar-collapse{
+    justify-content: flex-end !important;
+}
+
+#basic-navbar-nav{
+    margin-top: 1%;
+    margin-right: 4%;
+}
+
+a.navbar-brand{
+    margin-top: 13px;
+    margin-left: 3%;
+}
+
+#search{
+    width: 274px !important;
+    height: 48px !important;
+    margin: 8px;
+    background: #FAFAFA;
+    border: none;
+    border-radius: 10px;
+}
+
+.searchInputs input::placeholder{
+    padding: 20px !important;
+}
+
+#AdminNav{
+    justify-content: space-evenly !important;
+}
+

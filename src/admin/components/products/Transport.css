@@ -1,0 +1,298 @@
+/* Base container styles */
+.container {
+  width: 100%;
+  padding: 15px;
+  margin: 0 auto;
+}
+
+/* Search section styles */
+.transportSearch {
+  width: 100%;
+  height: 50px;
+  border-radius: 5px;
+  background: #F8F8F8;
+  border: 1px solid #eee;
+  padding: 0 15px;
+  font-size: 16px;
+  transition: all 0.3s ease;
+}
+
+.transportSearch:focus {
+  outline: none;
+  border-color: #0054FF;
+  box-shadow: 0 0 0 2px rgba(0, 84, 255, 0.1);
+}
+
+.transportSearchBtn {
+  width: 100% !important;
+  background-color: #ff5722;
+  color: #fff;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px !important;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-top: -5%;
+}
+
+.transportSearchBtn:hover {
+  background-color: #f4511e;
+}
+
+.AddTransportBtn {
+  width: auto !important;
+  background-color: #0054FF;
+  color: #fff;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px !important;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin: 10px 0;
+}
+
+.AddTransportBtn:hover {
+  background-color: #0043cc;
+}
+
+/* Table styles */
+.products-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+  background: #fff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.products-table th,
+.products-table td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #eee;
+}
+
+.products-table th {
+  background-color: #f8f9fa;
+  font-weight: 600;
+}
+
+.products-table tbody tr:hover {
+  background-color: #f8f9fa;
+}
+
+/* Status icons container */
+.status {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+
+/* Modal styles */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background: #fff;
+  padding: 25px;
+  border-radius: 8px;
+  width: 90%;
+  max-width: 600px;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.transport-modal {
+  background: #fff;
+  padding: 30px;
+}
+
+/* Form styles */
+.transport-registration-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.form-row {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 15px;
+}
+
+.form-group {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group label {
+  margin-bottom: 8px;
+  font-weight: 500;
+}
+
+.form-group input {
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.form-group input:focus {
+  outline: none;
+  border-color: #0054FF;
+  box-shadow: 0 0 0 2px rgba(0, 84, 255, 0.1);
+}
+
+.submit-button {
+  background-color: #0054FF;
+  color: #fff;
+  padding: 12px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+
+.submit-button:hover {
+  background-color: #0043cc;
+}
+
+/* Transport details styles */
+.transport-details {
+  padding: 20px;
+}
+
+.detail-group {
+  margin-bottom: 15px;
+}
+
+.detail-group label {
+  display: block;
+  margin-bottom: 5px;
+  color: #666;
+}
+
+.detail-value {
+  font-size: 16px;
+  margin: 0;
+}
+
+/* Pagination styles */
+.pagination {
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+  margin: 20px 0;
+}
+
+.pagination .page-item .page-link {
+  padding: 8px 12px;
+  border: 1px solid #dee2e6;
+  color: #0054FF;
+  background-color: #fff;
+  cursor: pointer;
+}
+
+.pagination .page-item.active .page-link {
+  background-color: #0054FF;
+  color: #fff;
+  border-color: #0054FF;
+}
+
+/* Results count styles */
+.results-count {
+  color: #666;
+  font-size: 14px;
+}
+
+/* Responsive styles */
+@media screen and (max-width: 1200px) {
+  .container {
+    max-width: 960px;
+  }
+}
+
+@media screen and (max-width: 992px) {
+  .container {
+    max-width: 720px;
+  }
+  
+  .AddTransportBtn {
+    margin-top: 10px !important;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .container {
+    max-width: 540px;
+  }
+  
+  .form-row {
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .transportSearch {
+    height: 45px;
+  }
+  
+  .transportSearchBtn,
+  .AddTransportBtn {
+    width: 100% !important;
+    margin: 10px 0 !important;
+  }
+  
+  .products-table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+  
+  .modal-content {
+    width: 95%;
+    padding: 15px;
+  }
+}
+
+@media screen and (max-width: 576px) {
+  .container {
+    width: 100%;
+    padding: 10px;
+  }
+  
+  .products-table th,
+  .products-table td {
+    padding: 8px;
+    font-size: 14px;
+  }
+  
+  .status {
+    gap: 10px;
+  }
+  
+  .pagination .page-item .page-link {
+    padding: 6px 10px;
+    font-size: 14px;
+  }
+  
+  .results-count {
+    font-size: 12px;
+  }
+  
+  .form-group input {
+    font-size: 14px;
+  }
+}

@@ -1,0 +1,36 @@
+.sideNav{
+    width: 95%;
+    margin-top: -1%;
+}
+
+main{
+    overflow: scroll;
+    width: 100%;
+    height: 80vh;
+    background-color: #FAFAFA;
+}
+
+/* Media Query for Tablets */
+@media (min-width: 481px) and (max-width: 768px){
+    .sideNav{
+        width: 100%;
+        margin-top: 0;
+    }
+
+    main{
+        height: auto;
+        overflow: hidden;
+    }
+}
+
+ /* Media Query for Mobile Devices */
+ @media (max-width: 480px){
+    main{
+       height: max-content;
+    }
+
+    .sideNav{
+        width: 100%;
+        margin-top: 0;
+    }
+ }

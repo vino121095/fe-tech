@@ -1,0 +1,154 @@
+.back-link{
+    display: none;
+}
+
+.Dashboardlogo img{
+    width: 211px;
+    margin-top: 24px;
+    margin-left: 30px;
+}
+
+.general{
+    color: #808080;
+    margin-top: 25%;
+    font-size: 16px;
+}
+
+.generalLinks ul li{
+    line-height: 60px;
+}
+
+.generalLinks ul li a img{
+    color: black;
+}
+
+.support{
+    color: #808080;
+    margin-top: 25%;
+    font-size: 16px;
+}
+
+.supportLinks ul li{
+    line-height: 60px;
+}
+
+.dropdown a{
+    background-color: white !important;
+}
+.dropdown-menu{
+    height: max-content;
+}
+.dropdown-menu a{
+    padding: 0 !important;
+    margin-bottom: 10px !important;
+    height: 40px !important;
+    text-align: center !important;
+}
+
+/* Media Query for Tablets */
+@media (min-width: 481px) and (max-width: 768px){
+    .Dashboardlogo{
+        display: none;
+    }
+
+    .back-link{
+        display: block;
+        margin-top: 20px;
+    }
+
+    .sideNavContainer{
+        position: absolute !important;
+        background: #0024FF;
+        color: white;
+        width: 90%;
+        z-index: 1999;
+    }
+
+    .general{
+        color: white;
+    }
+
+    .support{
+        color: white;
+    }
+
+    .generalLinks ul li{
+        line-height: 45px;
+    }
+
+    .generalLinks ul li a img{
+        color: white;
+    }
+
+    .supportLinks ul li{
+        line-height: 45px;
+    }
+
+    .generalLinks ul li a{
+        font-size: 12px !important;
+        color: white !important;
+    }
+
+    .supportLinks ul li a{
+        font-size: 12px !important;
+        color: white !important;
+    }
+
+    .dropdown a{
+        color: black !important;
+    }
+}
+
+ /* Media Query for Mobile Devices */
+ @media (max-width: 480px){
+    .Dashboardlogo{
+        display: none;
+    }
+
+    .back-link{
+        display: block;
+        margin-top: 20px;
+    }
+
+    .sideNavContainer{
+        position: absolute !important;
+        background: #0024FF;
+        color: white;
+        width: 90%;
+        z-index: 1999;
+    }
+
+    .general{
+        color: white;
+    }
+
+    .support{
+        color: white;
+    }
+
+    .generalLinks ul li{
+        line-height: 45px;
+    }
+
+    .generalLinks ul li a img{
+        color: white;
+    }
+
+    .supportLinks ul li{
+        line-height: 45px;
+    }
+
+    .generalLinks ul li a{
+        font-size: 12px !important;
+        color: white !important;
+    }
+
+    .supportLinks ul li a{
+        font-size: 12px !important;
+        color: white !important;
+    }
+
+    .dropdown a{
+        color: black !important;
+    }
+ }
