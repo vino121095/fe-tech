@@ -1,0 +1,151 @@
+.card-section{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    margin: 50px 20px 0px 20px;
+}
+
+.StoreDetailsCard {
+    width: 300px;
+    height: auto !important;
+    border-radius: 10px;
+    margin: 20px 30px;
+    box-shadow: rgba(0, 0, 0, 0.15) 0px 5px 15px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+    transform: translateY(0); /* Initial position */
+  }
+  
+  /* Hover Effect */
+  .StoreDetailsCard:hover {
+    transform: translateY(-10px); /* Slides up slightly */
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 15px 25px; /* Increases shadow for lift effect */
+  }
+
+.StoreDetailsCard img{
+    margin-top: 30px;
+    width: 78%;
+    height: auto !important;
+    margin-left: 11%;
+}
+
+.StoreDetailsCard .p1{
+   margin-top: 20px;
+   margin-left: 10%;
+   padding: 0%;
+}
+
+.StoreDetailsCard .p2{
+    margin-top: 10px;
+    margin-left: 10%;
+    padding: 0%;
+}
+
+.StoreDetailsCard .p3{
+    margin-top: 0px;
+    margin-left: 10%;
+    padding: 0%;
+}
+
+.StoreDetailsCard .p4{
+    margin-top: 0px;
+    margin-left: 10%;
+    padding: 0%;
+    color: blue;
+}
+
+.StoreDetailsCard .rating{
+    margin-top: -7px !important;
+    margin-left: 10% !important;
+    padding: 0%;
+    width: 120px !important;
+    height: 30px !important;
+}
+.StoreDetailsCard .StoreDetailsBtn{
+    height: 40px;
+    width: 220px;
+    border-radius: 10px;
+    background-color: #F24E1E !important;
+    color: white;
+    font-size: 16px !important;
+    font-weight: 700;
+    border: none;
+    justify-content: center;
+    align-items: center;
+    margin-left: 13% !important;
+    margin-top: 5px;
+    margin-bottom: 30px;
+    padding: 0%;
+}
+
+/* Media Query for Mobile Devices */
+@media (max-width: 480px){
+    .Mob-nav{
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        font-size: 24px;
+        border: none;
+        padding: 0 20px;
+       }
+
+       .card{
+        width: 40% !important;
+        height: 315px !important;
+        border-radius: 10px;
+    }
+    
+    .card img{
+        width: 110px !important;
+        height: 100px !important;
+        margin-left: 11%;
+    }
+    
+    .card .p1{
+       margin-top: 10px;
+       padding: 0%;
+       font-size: 12px !important;
+    }
+    
+    .card .p2{
+        margin-top: 0px;
+        padding: 0%;
+        font-size: 10px !important;
+    }
+    
+    .card .p3{
+        margin-top: 0px;
+        padding: 0%;
+        font-size: 10px !important;
+        margin-left: 6%;
+    }
+    
+    .card .p4{
+        
+        margin-top: 0px;
+        padding: 0%;
+        font-size: 10px !important;    
+    }
+    
+    .card .rating{
+        padding: 0%;
+        width: 50% !important;
+        height: 25px !important;
+        margin-left: 21px !important;
+    }
+    .card .btn{
+        margin-top: 5px;
+
+        height: 30px !important;
+        width: 100px !important;
+        border-radius: 10px;
+        background-color: #F24E1E !important;
+        color: white;
+        font-size: 10px;
+        font-weight: 700;
+        border: none;
+        justify-content: center;
+        align-items: center;
+        margin-left: 18% !important;
+        padding: 0%;
+    }
+}

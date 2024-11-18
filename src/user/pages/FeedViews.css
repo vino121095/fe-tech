@@ -1,0 +1,449 @@
+.search {
+  display: flex;
+  justify-content: space-around;
+}
+
+.searchInput {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 60%;
+  height: 60px;
+  border-radius: 20px;
+  margin-top: 70px;
+  border: 1px solid #808080;
+  padding: 0 15px;
+}
+
+.feed-search-input input::placeholder {
+  color: #808080;
+  font-size: 30px;
+  font-weight: 400;
+  line-height: 38px;
+  padding-left: 20px;
+}
+
+.feed-search-input {
+  border: none;
+  outline: none;
+  flex: 1;
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 25px;
+}
+
+.search-icons {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-left: 10px;
+}
+
+.search-icons i {
+  cursor: pointer;
+  color: gray;
+}
+
+.divider {
+  height: 50px;
+  width: 1px;
+  background-color: #ccc;
+  margin: 0 10px;
+}
+
+.feed-btn button {
+  margin-top: 70px;
+  margin-left: 115%;
+}
+
+/* Modal Overlay */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+/* Modal Content */
+.modal-content {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  width: 90%;
+  max-width: 800px !important;
+  position: relative;
+}
+
+/* Close Button */
+/* .close-button {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 24px;
+    cursor: pointer;
+  } */
+
+.submitReq {
+  width: 40% !important;
+  height: 40px;
+  margin-top: 20px;
+  margin-left: 60% !important;
+  font-size: 16px !important;
+  background: #f24e1e !important;
+  color: white !important;
+}
+
+.FeedCardContainer {
+  margin-top: 70px;
+  justify-content: center;
+}
+
+.FeedCard {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly !important;
+  padding: 16px;
+  border-radius: 8px;
+  max-width: 1350px;
+  margin-bottom: 50px;
+  margin-left: 5.6%;
+  box-shadow: rgba(0, 0, 0, 0.15) 0px 5px 15px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+  transform: translateY(0);
+}
+
+.product-image {
+  width: 30%;
+  height: auto;
+  object-fit: cover;
+  margin-left: 0%;
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.info-item {
+  display: flex;
+  justify-content: space-between;
+  margin: 1% 5%;
+}
+
+.label {
+  font-weight: bold;
+}
+
+.value {
+  text-align: right;
+}
+
+.close-date {
+  font-size: 0.8rem;
+  color: #777;
+  margin-top: 8px;
+  margin-left: 5%;
+}
+
+.take-button {
+  margin-top: 12px;
+  padding: 8px 16px;
+  background-color: #ff5722;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-left: 70% !important;
+}
+
+@media (min-width: 1440px) and (max-width: 2560px) {
+  .search{
+    margin-left: 8%;
+  }
+  .feed-btn button {
+    margin-top: 74px !important;
+    margin-left: -110% !important;
+    width: 150%;
+    height: 55px;
+    background: #0024FF;
+    color: white;
+    border-radius: 10px;
+    border: none;
+  }
+
+  .FeedCardContainer{
+    margin-left: -6%;
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .FeedCard{
+    width: 70%;
+  }
+}
+
+@media (min-width: 1024px) and (max-width: 1439px) {
+  .search{
+    margin-left: 7%;
+  }
+  .feed-btn button {
+    margin-top: 40% !important;
+    margin-left: -70% !important;
+    width: 150%;
+    height: 55px;
+    background: #0024FF;
+    color: white;
+    border-radius: 10px;
+    border: none;
+  }
+
+  .FeedCardContainer{
+    margin-left: -6%;
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 5%;
+  }
+
+  .FeedCard{
+    width: 70%;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1023px) {
+  .search{
+    margin-left: 3%;
+  }
+  .feed-btn button {
+    margin-top: 50% !important;
+    margin-left: -50% !important;
+    width: 150% !important;
+    height: 55px;
+    background: #0024FF;
+    color: white;
+    border-radius: 10px;
+    border: none;
+  }
+
+  .FeedCardContainer{
+    margin-left: -6%;
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 5%;
+  }
+
+  .FeedCard{
+    width: 70%;
+  }
+}
+
+@media (min-width: 481px) and (max-width: 768px) {
+  .search{
+    margin-left: 3%;
+    display: flex;
+    flex-direction: column;
+  }
+  .feed-btn button {
+    margin-top: 5% !important;
+    margin-left: 38% !important;
+    width: 20%;
+    height: 55px;
+    background: #0024FF;
+    color: white;
+    border-radius: 10px;
+    border: none;
+    font-size: 12px !important;
+  }
+
+  #searchBox{
+    width: 90%;
+    margin-left: 3.5%;
+    margin-top: 5%;
+  }
+
+  .FeedCardContainer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly !important;
+    margin-top: 7%;
+    margin-left: -6%;
+  }
+  
+  .FeedCard {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    padding: 16px;
+    border-radius: 8px;
+    width: 40%;
+    max-width: 1400px; /* Adjust max-width as needed */
+  }
+  
+  .product-image {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    margin-left: 0%;
+  }
+  
+  .info {
+    font-size: 10px;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+  }
+  
+  .info-item {
+    display: flex;
+    justify-content: space-between;
+    margin: 1% 1%;
+  }
+  
+  .label {
+    font-weight: bold;
+  }
+  
+  .value {
+    text-align: right;
+  }
+  
+  .close-date {
+    font-size: 0.8rem;
+    color: #777;
+    margin-top: 8px;
+    margin-left: 5%;
+  }
+}
+
+/* Media Query for Mobile Devices */
+@media (max-width: 480px) {
+  .search{
+    margin-left: 3%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  #searchBox { 
+    width: 70% !important;
+    height: 40px;
+    margin-left: 14%;
+    margin-top: 20px;
+    border: 1px solid #808080;
+    padding: 0 15px !important;
+  }
+
+  .feed-btn button {
+    font-size: 12px !important;
+    width: 20%;
+    height: 40px !important;
+    margin-top: 5%;
+    margin-left: 37% !important;
+    background: #0024FF;
+    color: white;
+    border-radius: 10px;
+    border: none;
+  }
+
+  .FeedCardContainer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly !important;
+    margin-top: 5%;
+    margin-left: -6%;
+  }
+  
+  .FeedCard {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    padding: 16px;
+    border-radius: 8px;
+    width: 42%;
+    max-width: 1400px; /* Adjust max-width as needed */
+  }
+  
+  .product-image {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    margin-left: 0%;
+  }
+  
+  .info {
+    font-size: 8px;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+  }
+  
+  .info-item {
+    display: flex;
+    justify-content: space-between;
+    margin: 1% 1%;
+  }
+  
+  .label {
+    font-weight: bold;
+  }
+  
+  .value {
+    text-align: right;
+  }
+  
+  .close-date {
+    font-size: 0.8rem;
+    color: #777;
+    margin-top: 8px;
+    margin-left: 5%;
+  }
+  
+  .take-button {
+    width: 50%;
+    height: 40px;
+    font-size: 14px !important;
+    margin-top: 12px;
+    padding: 8px 16px;
+    background-color: #ff5722;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-left: 25% !important;
+  }
+}
+
+@media (min-width: 320px) and (max-width: 389px) {
+  #searchBox {
+    width: 50% !important;
+    height: 30px;
+    margin-left: 3.5%;
+    margin-top: 20px;
+    border: 1px solid #808080;
+    padding: 0 15px;
+  }
+
+  .take-button{
+    font-size: 10px !important;
+    height: 30px !important;
+  }
+
+  .feed-btn button{
+    font-size: 10px !important;
+    width: 23%;
+    height: 30px!important;
+  }
+
+  .info{
+    font-size: 8px;
+  }
+}
+
+

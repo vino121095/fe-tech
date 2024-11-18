@@ -1,0 +1,16 @@
+
+/* Media Query for Mobile Devices */
+@media (max-width: 480px){
+    .Mob-nav{
+        display: flex;
+        justify-content: space-around !important;
+        align-items: center;
+        font-size: 24px;
+        font-weight: 700;
+        border: none;
+        padding: 5px 0 !important;
+        margin-top: 10px;
+        border-bottom: 1px solid rgb(243, 241, 241);
+        border-top: 1px solid rgb(243, 241, 241);
+       }
+}

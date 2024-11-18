@@ -1,0 +1,88 @@
+.login-container {
+    display: flex;
+    width: 60%;
+    height: 30%;
+    margin-left: 20%;
+    border: 1px solid #808080;
+    margin-top: 50px;
+    margin-bottom: 50px;
+  }
+  
+  .login-form {
+    width: 50%;
+    padding: 100px;
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  
+  h3 {
+    font-size: 30px;
+    font-weight: 700;
+    margin-bottom: 20px;
+  }
+  
+  .form-group {
+    margin-bottom: 20px;
+  }
+  
+  .form-group label {
+    display: block;
+    font-size: 1.2rem;
+    margin-bottom: 5px;
+  }
+  
+  .form-group input {
+    width: 100%;
+    padding: 10px;
+    font-size: 1rem;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    background-color: #FAFAFA;
+  }
+  
+  .forgot-password {
+    color: #707070;
+    margin-top: 10px;
+    display: inline-block;
+    text-decoration: none;
+  }
+  
+  .login-button {
+    background-color: #f05628;
+    color: white;
+    padding: 0px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    margin-top: 20px;
+    width: 70%;
+    height: 50px;
+    margin-left: 15%;
+    
+  }
+  
+  .otp-login {
+    margin-top: 15px;
+    font-size: 0.9rem;
+    margin-left: 25%;
+  }
+  
+  .otp-login a {
+    color: #ff5400;
+    text-decoration: none;
+  }
+  
+  .login-banner {
+    width: 50%;
+    background-color: #0054FF;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .rim-logo {
+    max-width: 60%;
+  }

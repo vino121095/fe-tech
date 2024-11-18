@@ -1,0 +1,133 @@
+.order-history {
+    max-width: 1000px;
+    margin: auto;
+    padding: 20px;
+  }
+  
+  .order-history h2 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+  }
+  
+  .order-table {
+    width: 100%;
+    border-collapse: collapse;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    overflow: hidden;
+    
+  }
+  
+  .order-table thead {
+    background-color: #e0e7ff;
+    color: #333;
+  }
+  
+  .order-table th,
+  .order-table td {
+    padding: 12px;
+    text-align: left;
+    font-size: 14px;
+  }
+  
+  .order-table th {
+    font-weight: 600;
+    color: #666;
+  }
+  
+  .order-table tbody tr {
+    cursor: pointer;
+    transition: background-color 0.2s;
+  }
+  
+  .order-table tbody tr:hover {
+    background-color: #f9f9f9;
+  }
+  
+  .order-table tbody tr.order-row td {
+    border-top: 1px solid #e0e0e0;
+  }
+  
+  .order-table tbody .order-items-row td {
+    padding: 0;
+    background-color: #f5f7ff;
+  }
+  
+  .order-items {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 15px;
+    justify-content: space-around !important;
+  }
+  
+  .order-item {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin-left: -5%;
+    gap: 15px;
+    width: 100%;
+    text-decoration: none;
+  }
+  
+  .item-image {
+    width: 50px;
+    height: 50px;
+    object-fit: contain;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+  }
+  
+  .item-details {
+    font-size: 14px;
+    color: #333;
+  }
+  
+  .item-name {
+    font-weight: bold;
+    margin-bottom: 4px;
+  }
+  
+  .item-category,
+  .item-quantity,
+  .item-date,
+  .item-price {
+    color: #666;
+    margin: 2px 0;
+  }
+  
+  .item-quantity::before {
+    content: '• ';
+  }
+  
+  .item-price {
+    font-weight: 600;
+    color: #333;
+  }
+
+  @media (max-width: 480px) {
+    .order-table {
+      width: 80% !important;
+      font-size: 12px;
+      overflow: scroll !important;
+    }
+
+    .order-items-row td {
+      padding: 10px;
+    }
+  
+    .order-item {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+  
+    .item-image {
+      width: 50px;
+      height: 50px;
+    }
+  }
+  
+  

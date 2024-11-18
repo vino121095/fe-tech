@@ -1,0 +1,14 @@
+.payBtn{
+    font-size: 15px !important;
+}
+
+.paymentLogo{
+    display: none !important;;
+}
+
+/* Media Query for Mobile Devices */
+@media (max-width: 480px){
+    .paymentLogo{
+        display: visible !important;
+    }
+}
