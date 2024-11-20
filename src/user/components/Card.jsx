@@ -5,8 +5,7 @@ import axios from 'axios';
 import baseurl from '../../apiService/apiService';
 
 const Card = () => {
-  const [cartItems, setCartItems] = useState([]);
-  const [products, setProducts] = useState([]); // Initialize as an empty array
+  const [products, setProducts] = useState([]);
   const navigate = useNavigate();
   const LoggedUser = JSON.parse(localStorage.getItem('userData'));
 
@@ -14,57 +13,56 @@ const Card = () => {
     const fetchProducts = async () => {
       try {
         const response = await axios.get(`${baseurl}/api/getAllProducts`);
-        console.log('Fetched products:', response.data.products); // Debugging log
-        setProducts(response.data.products || []); // Fallback to empty array if data is undefined
+        setProducts(response.data || []);
       } catch (error) {
         console.error('Error fetching products:', error);
-        setProducts([]); // Ensure `products` remains an empty array on error
+        setProducts([]);
       }
     };
     fetchProducts();
   }, []);
 
-  const handleAddToCard = async (product) => {
+  const handleAddToCart = async (product) => {
     if (LoggedUser) {
       try {
-        // API call to add product to cart
-        await axios.post(`${baseurl}/api/addtocart`, {
-          productId: product.product_id,
-          userId: LoggedUser.user_id,
+        const response = await axios.post(`${baseurl}/api/addtocart`, {
+          product_id: product.product_id,
+          user_id: LoggedUser.uid,
           quantity: 1,
         });
 
-        // Update the cart state if needed
-        setCartItems((prevItems) => [...prevItems, product]);
-
-        // Redirect the user to the "Cart" page
-        navigate('/user/pages/Cart');
+        alert('Product added to cart successfully!');
+        navigate('/user/pages/Cart'); // Navigate to Cart page
       } catch (error) {
-        console.error('Error adding product to cart:', error);
+        console.error('Error adding product to cart:', error.response?.data || error.message);
+        alert(error.response?.data?.message || 'Failed to add product to cart.');
       }
     } else {
       alert('Please login to add products to cart.');
-      navigate('/Auth/Login');
+      navigate('/Auth/Login'); // Redirect to Login page
     }
   };
 
   return (
     <div className="card-container">
-      {products && products.length > 0 ? ( // Ensure `products` is defined and not empty
+      {products.length > 0 ? (
         products.map((product) => (
-          <div className="card" key={product.product_id}>
-            <img src={`${baseurl}/${product.first_image}`} alt={product.name} />
-            <p>{product.name}</p>
+          <div className="card" key={product.pid}>
+            <img
+              src={`${baseurl}/${product.images[0]?.image_path || 'default.jpg'}`}
+              alt={product.product_name}
+            />
+            <p>{product.product_name}</p>
             <span></span>
             <h4>Rs-{product.mrp_rate}</h4>
             <small className="brand">{product.brand_name}</small>
-            <button className="cardBtn" onClick={() => handleAddToCard(product)}>
+            <button className="cardBtn" onClick={() => handleAddToCart(product)}>
               Add to Cart
             </button>
           </div>
         ))
       ) : (
-        <p>No products available</p> // Display a fallback message if no products exist
+        <p>No products available</p>
       )}
     </div>
   );

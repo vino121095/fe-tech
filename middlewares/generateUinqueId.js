@@ -8,6 +8,7 @@ exports.generateOrderId = (req, res, next) => {
 
 exports.generateShipmentId = (req, res, next) =>{
     req.shipment_id = 'SHP-' + crypto.randomUUID().slice(0, 8); 
+    next();
 }
 
 exports.addOrderDate = (req, res, next) => {

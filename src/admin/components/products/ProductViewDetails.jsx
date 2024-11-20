@@ -16,11 +16,11 @@ const ProductViewDetails = () => {
       try {
         const response = await axios.get(`${baseurl}/api/productDetail/${id}`);
         const fetchedProduct = response.data;
-
+        console.log(fetchedProduct)
         // Extract image paths from the image array
-        if (fetchedProduct.image && Array.isArray(fetchedProduct.image)) {
-          fetchedProduct.image = fetchedProduct.image.map((img) => img.image_path);
-          setMainImage(`${baseurl}/${fetchedProduct.image[0]}`); // Set the first image as the main image
+        if (fetchedProduct.images && Array.isArray(fetchedProduct.images)) {
+          fetchedProduct.images = fetchedProduct.images.map((img) => img.image_path);
+          setMainImage(`${baseurl}/${fetchedProduct.images[0]}`); // Set the first image as the main image
         }
 
         setProduct(fetchedProduct);
@@ -45,8 +45,8 @@ const ProductViewDetails = () => {
 
           {/* Thumbnail Gallery */}
           <div className="thumbnailGallery">
-            {product.image && product.image.length > 0 ? (
-              product.image.map((img, index) => (
+            {product.images && product.images.length > 0 ? (
+              product.images.map((img, index) => (
                 <img
                   key={index}
                   src={`${baseurl}/${img}`}
@@ -77,7 +77,7 @@ const ProductViewDetails = () => {
       <section className="section-2">
         {/* Product Information */}
         <div className="productInfoSection">
-          <h2>{product.name}</h2>
+          <h2>{product.product_name}</h2>
           <h3 className="productPrice">Rs {product.mrp_rate}</h3>
           <p><strong>ID Product:</strong> {product.product_id}</p>
 

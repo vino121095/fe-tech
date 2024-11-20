@@ -10,10 +10,10 @@ const Cart = () => {
   const [cartItems, setCartItems] = useState([]);
   const [totalAmount, setTotalAmount] = useState(0);
   const LoggedUser = JSON.parse(localStorage.getItem("userData"));
-  const userId = LoggedUser?.user_id;
+  const userId = LoggedUser?.uid;
 
   useEffect(() => {
-    if (!LoggedUser || LoggedUser.isAdmin !== 0) {
+    if (!LoggedUser || LoggedUser.role !== 'user') {
       navigate("/Auth/login"); // Redirect if not logged in or not an admin
     }
   }, [LoggedUser, navigate]);
@@ -27,9 +27,9 @@ const Cart = () => {
       const fetchCartData = async () => {
         try {
           const response = await axios.get(
-            baseurl+`/rim/user/${userId}`
+            baseurl+`/api/user/${userId}`
           );
-          const items = response.data.cartItems.map((item) => ({
+          const items = response.data.map((item) => ({
             ...item,
           }));
           setCartItems(items);
@@ -44,23 +44,23 @@ const Cart = () => {
 
   const calculateTotal = (items) => {
     const total = items.reduce(
-      (total, item) => total + Number(item.mrp_rate || 0) * item.quantity,
+      (total, item) => total + Number(item.product.mrp_rate || 0) * item.quantity,
       0
     );
     setTotalAmount(total);
   };
 
-  const handleQuantityChange = async (productId, increment) => {
+  const handleQuantityChange = async (cartId, increment) => {
     // Create a new array for updated items with updated quantities and send PUT requests
     const updatedItems = await Promise.all(
       cartItems.map(async (item) => {
-        if (item.product_id === productId) {
+        if (item.cid === cartId) {
           const newQuantity = increment
             ? item.quantity + 1
             : Math.max(item.quantity - 1, 1);
   
           try {
-            await axios.put(`${baseurl}/rim/update/${item.cart_id}`, { quantity: newQuantity });
+            await axios.put(`${baseurl}/api/update/${item.cid}`, { quantity: newQuantity });
           } catch (error) {
             alert(`Error updating quantity for ${item.product_id}: ${error.message}`);
           }
@@ -78,7 +78,7 @@ const Cart = () => {
   const handlecheckout = async () => {
     try {
       // Send POST request with user_id to place the order
-      await axios.post(baseurl+"/rim/placeOrder", { userId: userId });
+      await axios.post(baseurl+"/api/placeOrder", { user_id: userId });
 
       // Navigate to the checkout page upon successful order placement
       navigate("/user/checkout");
@@ -106,24 +106,24 @@ const Cart = () => {
             </thead>
             <tbody>
               {cartItems.map((item) => (
-                <tr key={item.product_id}>
+                <tr key={item.cid}>
                   <td className="product-details">
                     <img
-                      src={baseurl+`/${item.first_image}`}
+                      src={baseurl+`/${item.product.images[0].image_path}`}
                       alt={item.name}
                       className="product-images"
                     />
                     <div className="product-info">
-                      <p className="product-name">{item.name}</p>
-                      <p className="product-category">{item.brand_name}</p>
+                      <p className="product-name">{item.product.product_name}</p>
+                      <p className="product-category">{item.product.brand_name}</p>
                     </div>
                   </td>
-                  <td className="product-mrp">Rs {Number(item.mrp_rate || 0).toFixed(2)}</td>
+                  <td className="product-mrp">Rs {Number(item.product.mrp_rate || 0).toFixed(2)}</td>
                   <td className="quantity-controls">
                     <div className="btnControl">
                       <button
                         onClick={() =>
-                          handleQuantityChange(item.product_id, false)
+                          handleQuantityChange(item.cid, false)
                         }
                       >
                         -
@@ -131,7 +131,7 @@ const Cart = () => {
                       <span>{item.quantity}</span>
                       <button
                         onClick={() =>
-                          handleQuantityChange(item.product_id, true)
+                          handleQuantityChange(item.cid, true)
                         }
                       >
                         +
@@ -139,7 +139,7 @@ const Cart = () => {
                     </div>
                   </td>
                   <td className="total-price">
-                    Rs {(Number(item.mrp_rate || 0) * item.quantity).toFixed(2)}
+                    Rs {(Number(item.product.mrp_rate || 0) * item.quantity).toFixed(2)}
                   </td>
                 </tr>
               ))}

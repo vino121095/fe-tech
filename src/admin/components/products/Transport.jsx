@@ -14,11 +14,11 @@ const Transport = () => {
   const [transports, setTransports] = useState([]);
   const [viewTransport, setViewTransport] = useState(null);
   const [currentTransport, setCurrentTransport] = useState({
-    travelsName: "",
+    travels_name: "",
     location: "",
-    driverName: "",
-    contactPersonName: "",
-    phoneNo: "",
+    dirver_name: "",
+    contact_person_name: "",
+    phone: "",
     email: "",
   });
 
@@ -30,8 +30,8 @@ const Transport = () => {
     try {
       const response = await axios.get(`${baseurl}/api/transport`);
       // Ensure we have valid data before processing
-      if (response.data && Array.isArray(response.data.transports)) {
-        const validTransports = response.data.transports.filter(transport => 
+      if (response.data && Array.isArray(response.data)) {
+        const validTransports = response.data.filter(transport => 
           transport && 
           typeof transport === 'object'
         );
@@ -46,11 +46,11 @@ const Transport = () => {
     }
   };
 
-  const fetchTransportDetails = async (id) => {
+  const fetchTransportDetails = async (tid) => {
     try {
-      const response = await axios.get(`${baseurl}/api/transport/${id}`);
-      if (response.data && response.data.transport) {
-        setViewTransport(response.data.transport);
+      const response = await axios.get(`${baseurl}/api/transport/${tid}`);
+      if (response.data && response.data) {
+        setViewTransport(response.data);
         setIsViewModalOpen(true);
       } else {
         throw new Error("Transport details not found");
@@ -62,7 +62,7 @@ const Transport = () => {
   };
 
   const handleViewTransport = async (transport) => {
-    await fetchTransportDetails(transport.id);
+    await fetchTransportDetails(transport.tid);
   };
 
   const closeViewModal = () => {
@@ -93,11 +93,11 @@ const Transport = () => {
     if (!isModalOpen) {
       // Reset form when opening modal
       setCurrentTransport({
-        travelsName: "",
+        travels_name: "",
         location: "",
-        driverName: "",
-        contactPersonName: "",
-        phoneNo: "",
+        dirver_name: "",
+        contact_person_name: "",
+        phone: "",
         email: "",
       });
     }
@@ -106,20 +106,20 @@ const Transport = () => {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    // Convert transportName to travelsName in the handler
-    const fieldName = name === "transportName" ? "travelsName" : name;
+    // Convert transportName to travels_name in the handler
+    const fieldName = name === "transportName" ? "travels_name" : name;
     setCurrentTransport((prev) => ({ ...prev, [fieldName]: value }));
   };
 
   const validateForm = () => {
-    if (!currentTransport.travelsName || !currentTransport.location || !currentTransport.driverName) {
+    if (!currentTransport.travels_name || !currentTransport.location || !currentTransport.dirver_name) {
       alert("Please fill in all required fields!");
       return false;
     }
     
     // Validate phone number format
     const phoneRegex = /^\d{10}$/;
-    if (!phoneRegex.test(currentTransport.phoneNo)) {
+    if (!phoneRegex.test(currentTransport.phone)) {
       alert("Please enter a valid 10-digit phone number!");
       return false;
     }
@@ -142,17 +142,17 @@ const Transport = () => {
     }
 
     try {
-      if (currentTransport.id) {
+      if (currentTransport.tid) {
         // Update existing transport
         const response = await axios.put(
-          `${baseurl}/api/updatetransport/${currentTransport.id}`,
+          `${baseurl}/api/updatetransport/${currentTransport.tid}`,
           currentTransport
         );
         
         if (response.status === 200) {
           setTransports((prev) =>
             prev.map((transport) =>
-              transport.id === currentTransport.id ? response.data.transport : transport
+              transport.tid === currentTransport.tid ? response.data: transport
             )
           );
           alert("Transport updated successfully!");
@@ -179,7 +179,7 @@ const Transport = () => {
   const handleEditTransport = (transport) => {
     setCurrentTransport({
       ...transport,
-      phoneNo: transport.phoneNo || "",
+      phone: transport.phone || "",
       email: transport.email || "",
     });
     setIsModalOpen(true);
@@ -189,9 +189,9 @@ const Transport = () => {
     const confirmDelete = window.confirm("Are you sure you want to delete this transport?");
     if (confirmDelete) {
       try {
-        const response = await axios.delete(`${baseurl}/api/deletetransport/${transport.id}`);
+        const response = await axios.delete(`${baseurl}/api/deletetransport/${transport.tid}`);
         
-        if (response.status === 200) {
+        if (response.status === 204) {
           await fetchTransport();
           alert("Transport deleted successfully!");
         } else {
@@ -253,12 +253,12 @@ const Transport = () => {
             if (!transport || typeof transport !== 'object') return null;
             
             return (
-              <tr key={transport.id || index}>
+              <tr key={transport.tid || index}>
                 <td>{index + 1 + indexOfFirstTransport}</td>
                 <td>{transport.location || "N/A"}</td>
-                <td>{transport.travelsName || "N/A"}</td>
-                <td>{transport.phoneNo || "N/A"}</td>
-                <td>{transport.driverName || "N/A"}</td>
+                <td>{transport.travels_name || "N/A"}</td>
+                <td>{transport.phone || "N/A"}</td>
+                <td>{transport.dirver_name || "N/A"}</td>
                 <td className="status">
                   <Eye
                     style={{ color: "#091975", cursor: "pointer" }}
@@ -326,7 +326,7 @@ const Transport = () => {
           <div className="col-md-6">
             <div className="detail-group">
               <label className="fw-bold">Transport Name:</label>
-              <p className="detail-value">{viewTransport.travelsName || 'N/A'}</p>
+              <p className="detail-value">{viewTransport.travels_name || 'N/A'}</p>
             </div>
           </div>
           <div className="col-md-6">
@@ -341,13 +341,13 @@ const Transport = () => {
           <div className="col-md-6">
             <div className="detail-group">
               <label className="fw-bold">Driver Name:</label>
-              <p className="detail-value">{viewTransport.driverName || 'N/A'}</p>
+              <p className="detail-value">{viewTransport.dirver_name || 'N/A'}</p>
             </div>
           </div>
           <div className="col-md-6">
             <div className="detail-group">
               <label className="fw-bold">Contact Person:</label>
-              <p className="detail-value">{viewTransport.contactPersonName || 'N/A'}</p>
+              <p className="detail-value">{viewTransport.contact_person_name || 'N/A'}</p>
             </div>
           </div>
         </div>
@@ -356,9 +356,9 @@ const Transport = () => {
           <div className="col-md-6">
             <div className="detail-group">
               <label className="fw-bold">Phone Number:</label>
-              <p className="detail-value">{viewTransport.phoneNo || 'N/A'}</p>
+              <p className="detail-value">{viewTransport.phone || 'N/A'}</p>
             </div>
-          </div>
+          </div>``
           <div className="col-md-6">
             <div className="detail-group">
               <label className="fw-bold">Email:</label>
@@ -373,7 +373,7 @@ const Transport = () => {
       {isModalOpen && (
         <div className="modal-overlay" onClick={toggleModal}>
           <div className="modal-content transport-modal" onClick={(e) => e.stopPropagation()}>
-            <h2>{currentTransport.id ? "Edit Transport" : "Add Transport"}</h2>
+            <h2>{currentTransport.tid ? "Edit Transport" : "Add Transport"}</h2>
             <form onSubmit={handleSubmit} className="transport-registration-form">
               <div className="form-row">
                 <div className="form-group">
@@ -381,7 +381,7 @@ const Transport = () => {
                   <input
                     type="text"
                     name="transportName"
-                    value={currentTransport.travelsName}
+                    value={currentTransport.travels_name}
                     onChange={handleInputChange}
                     required
                   />
@@ -402,8 +402,8 @@ const Transport = () => {
                   <label>Driver Name</label>
                   <input
                     type="text"
-                    name="driverName"
-                    value={currentTransport.driverName}
+                    name="dirver_name"
+                    value={currentTransport.dirver_name}
                     onChange={handleInputChange}
                     required
                   />
@@ -416,8 +416,8 @@ const Transport = () => {
                     <label>Contact Person Name</label>
                     <input
                       type="text"
-                      name="contactPersonName"
-                      value={currentTransport.contactPersonName}
+                      name="contact_person_name"
+                      value={currentTransport.contact_person_name}
                       onChange={handleInputChange}
                       required
                     />
@@ -426,8 +426,8 @@ const Transport = () => {
                     <label>Phone Number</label>
                     <input
                       type="tel"
-                      name="phoneNo"
-                      value={currentTransport.phoneNo}
+                      name="phone"
+                      value={currentTransport.phone}
                       onChange={handleInputChange}
                       required
                       pattern="\d{10}"

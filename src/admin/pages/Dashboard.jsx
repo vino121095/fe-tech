@@ -31,16 +31,6 @@ export default function Dashboard() {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  useEffect(() => {
-    if (!LoggedUser || LoggedUser.isadmin !== true) {
-      navigate("/Auth/login"); // Redirect if not logged in or not an admin
-    }
-  }, [LoggedUser, navigate]);
-
-  if (!LoggedUser || LoggedUser.isadmin !== true) {
-    return null; // Prevent rendering if navigating away
-  }
-
   return (
     <>
       <div className="container-fluid d-flex p-0">

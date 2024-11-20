@@ -15,7 +15,7 @@ const ProductList = () => {
     const fetchProducts = async () => {
       try {
         const response = await axios.get(baseurl + '/api/getAllProducts');
-        setProducts(response.data.products || []); // Ensure fallback to empty array
+        setProducts(response.data || []); // Ensure fallback to empty array
       } catch (error) {
         console.error('Error fetching products:', error);
         setProducts([]); // Fallback to empty array in case of error
@@ -85,7 +85,7 @@ const ProductList = () => {
             <i className="bi bi-search" style={{ color: '#808080' }}></i>
           </div>
         </div>
-        <div className="add-btn">
+        <div className="addProductBtn">
           <button id="addProductBtn" onClick={() => toggleModal()}>
             <i className="bi bi-plus-circle"></i> Add Product
           </button>
@@ -107,7 +107,7 @@ const ProductList = () => {
           <tbody>
             {currentProducts.map((product, index) => (
               <tr key={index}>
-                <td>{product.p_id}</td>
+                <td>{product.pid}</td>
                 <td>{product.product_id}</td>
                 <td>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
