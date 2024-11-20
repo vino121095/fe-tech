@@ -8,7 +8,7 @@ import baseurl from "../../../apiService/apiService";
 import { useNavigate } from "react-router-dom";
 
 const Distributors = () => {
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
   const [distributors, setDistributors] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -26,9 +26,8 @@ const Distributors = () => {
 
   useEffect(() => {
     fetchDistributors();
-    resetForm()
+    resetForm();
   }, []);
-
 
   // Fetch distributors from API
   const fetchDistributors = async () => {
@@ -53,12 +52,12 @@ const Distributors = () => {
     });
 
     try {
-      const url = currentDistributor.distributor_id
-        ? `${baseurl}/api/updateDistributorById/${currentDistributor.distributor_id}`
+      const url = currentDistributor.did
+        ? `${baseurl}/api/updateDistributorById/${currentDistributor.did}`
         : `${baseurl}/api/addDistributor`;
-      
+
       const response = await axios({
-        method: currentDistributor.distributor_id ? "put" : "post",
+        method: currentDistributor.did ? "put" : "post",
         url,
         data: formData,
         headers: {
@@ -180,11 +179,10 @@ const Distributors = () => {
         <tbody>
           {currentDistributors.map((distributor, index) => (
             <tr key={index}>
-              <td>{index + 1}</td>
+              <td>{index+1}</td>
               <td>{distributor.companyname}</td>
               <td>{distributor.contact_person_name}</td>
               <td>{distributor.phoneno || "-"}</td>
-              <td>{distributor.email || "-"}</td>
               <td className="status">
                 <Eye style={{ color: "#091975", cursor: "pointer" }} onClick={() => handleViewDetails(distributor)} />
                 <PencilLine style={{ color: "#699BF7", cursor: 'pointer' }} onClick={() => handleEditDistributor(distributor)} />
@@ -219,7 +217,7 @@ const Distributors = () => {
       {isModalOpen && (
         <div className="modal-overlay" onClick={toggleModal}>
           <div className="modal-content distributor-modal" onClick={(e) => e.stopPropagation()}>
-            <h2>{currentDistributor?.distributor_id ? "Edit Distributor" : "Distributor Registration"}</h2>
+            <h2>{currentDistributor?.did ? "Edit Distributor" : "Distributor Registration"}</h2>
             <form onSubmit={handleSubmit} className="distributor-registration-form">
               <div className="form-row">
                 <div className="form-group">
@@ -243,43 +241,40 @@ const Distributors = () => {
                   <input type="text" name="creditlimit" placeholder="Enter credit limit" onChange={handleInputChange} value={currentDistributor.creditlimit} />
                 </div>
               </div>
-              <div className="form-row d-flex flex-column">
-                <p>Who can we contact for this conversation?</p>
-                <div className="d-flex flex-row gap-3">
-                  <div className="form-group">
-                    <label>Name</label>
-                    <input type="text" name="contact_person_name" placeholder="Enter name" onChange={handleInputChange} value={currentDistributor.contact_person_name} />
-                  </div>
-                  <div className="form-group">
-                    <label>Phone Number</label>
-                    <input type="text" name="phoneno" placeholder="Enter phone number" onChange={handleInputChange} value={currentDistributor.phoneno} />
-                  </div>
+              <div className="form-row">
+                <div className="form-group">
+                  <label>Contact Person Name</label>
+                  <input type="text" name="contact_person_name" placeholder="Enter contact person's name" onChange={handleInputChange} value={currentDistributor.contact_person_name} />
+                </div>
+                <div className="form-group">
+                  <label>Phone Number</label>
+                  <input type="tel" name="phoneno" placeholder="Enter phone number" onChange={handleInputChange} value={currentDistributor.phoneno} />
                 </div>
               </div>
               <div className="form-row">
                 <div className="form-group full-width">
-                  <label>Email Address</label>
-                  <input type="email" name="email" placeholder="Enter email address" onChange={handleInputChange} value={currentDistributor.email} />
+                  <label>Email</label>
+                  <input type="email" name="email" placeholder="Enter email" onChange={handleInputChange} value={currentDistributor.email} />
                 </div>
               </div>
-              <div className='d-flex flex-column align-items-center'>
-                <label>Upload Images</label>
-                <div className="image-upload-section">
-                  {imageFiles.length > 0 &&
-                    Array.from(imageFiles).map((file, index) => (
-                      <div key={index} className="image-preview">
-                        <img src={URL.createObjectURL(file)} alt={`Preview ${index}`} />
-                      </div>
-                    ))}
-                  <label className="upload-box">
-                    <input type="file" onChange={handleImageChange} style={{ display: 'none' }} />
-                    <span className="upload-icon"><Upload /></span>
-                  </label>
-                </div>
+              <div className="form-row d-flex" style={{ justifyContent:'center', alignItems:'center'}}>
+              {imageFiles.length > 0 &&
+                      Array.from(imageFiles).map((file, index) => (
+                        <div key={index} className="image-preview">
+                          <img src={URL.createObjectURL(file)} alt={`Preview ${index}`} />
+                        </div>
+                      ))}
+              <label className="upload-box">
+                      <input type="file" multiple onChange={handleImageChange} style={{ display: 'none' }} />
+                      <span className="upload-icon"><Upload /></span>
+                    </label>
               </div>
-              <button type="submit" className="submit-button">Submit</button>
+              <div className="form-row">
+                <button type="submit" className="submit-button">
+                  Submit
+                </button>
+              </div>
             </form>
-
           </div>
         </div>
       )}

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import '../Auth/Login.css';
+import './Login.css';
 import logo from '../user/assets/RiM-Logo.png';
 import { useLocation, useNavigate } from 'react-router-dom';
 import baseurl from '../apiService/apiService';
@@ -11,18 +11,18 @@ const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState(null);
-  const [isLogin, setIsLogin] = useState(false);
+
   const handleLogin = async (e) => {
     e.preventDefault();
     
     try {
       const response = await axios.post(`${baseurl}/api/loginUser`, { email, password });
-      console.log('Response data:', response.data.data); // Log response to debug
+      console.log('Response data:', response.data.data);
       
       if (response.data.message === 'Login successful') {
         localStorage.setItem('userData', JSON.stringify(response.data.data));
-        setError(null); // Clear any previous error messages
-        if (response.data.data.isadmin === true) {
+        setError(null);
+        if (response.data.role === 'admin') {
           navigate('/Dashboard');
         } else {
           navigate('/');
@@ -36,8 +36,6 @@ const Login = () => {
       console.error('Login error:', error);
     }
   };
-  
-  
 
   return (
     <div className="login-container">
@@ -50,6 +48,7 @@ const Login = () => {
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
+              required
             />
           </div>
           <div className="form-group">
@@ -58,14 +57,16 @@ const Login = () => {
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
+              required
             />
           </div>
           {error && <p className="error-message">{error}</p>}
+
           <button className="login-button" type="submit">
             Login
           </button>
         </form>
-        <p className="otp-login">
+        <p className="signup-link">
           <a href="/Auth/Signup">Sign-up</a>
         </p>
       </div>

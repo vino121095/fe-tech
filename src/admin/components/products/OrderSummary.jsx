@@ -13,9 +13,9 @@ const OrderSummary = () => {
   useEffect(() => {
     const fetchOrders = async () => {
       try {
-        const response = await axios.get(`${baseurl}/rim/orders`);
-        console.log(response.data); // Log the response to check the structure
-        setOrders(response.data || []); 
+        const response = await axios.get(`${baseurl}/api/orders`);
+        console.log(response.data.data); // Log the response to check the structure
+        setOrders(response.data.data || []); 
       } catch (error) {
         console.error('Error fetching orders:', error);
       }
@@ -83,8 +83,8 @@ const OrderSummary = () => {
         <tbody>
           {currentOrders.length > 0 ? (
             currentOrders.map((order, index) => (
-              <React.Fragment key={order.order_id}>
-                <tr onClick={() => toggleOrderItems(order.order_id)}>
+              <React.Fragment key={order.oid}>
+                <tr onClick={() => toggleOrderItems(order.oid)}>
                   <td>{index + 1}</td>
                   <td>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
@@ -101,18 +101,18 @@ const OrderSummary = () => {
                 </tr>
                 
                 {/* Render order items if this order is expanded */}
-                {expandedOrderId === order.order_id && (
+                {expandedOrderId === order.oid && (
                   <tr className="order-items-row">
                     <td colSpan="6">
                       <div className="order-items">
-                        {order.items.map((item, idx) => (
+                        {order.OrderItems.map((item, idx) => (
                           <div key={idx} className="order-item">
                             <img
-                              src={`${baseurl}/${item.firstImage}`}
-                              alt={item.product_name}
+                              src={`${baseurl}/${item.Product.images[0].image_path}`}
+                              alt={item.Product.product_name}
                               className="item-image"
                             />
-                            <p className="item-name">{item.product_name}</p>
+                            <p className="item-name">{item.Product.product_name}</p>
                             <p className="item-category">Quantity: {item.quantity}</p>
                             <p className="item-price">Price: {item.price}</p>
                           </div>

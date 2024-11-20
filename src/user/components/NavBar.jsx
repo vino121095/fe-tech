@@ -30,27 +30,10 @@ const NavBar = () => {
   const toggleMobileDropdown = () => {
     setIsMobileDropdownOpen(!isMobileDropdownOpen);
   };
-
-  const handleLoginClick = () => {
-    setIsMobileDropdownOpen(false);
-    navigate('/Auth/Login');
-  };
-
-  const handleProfileClick = () => {
-    setIsMobileDropdownOpen(false);
-    navigate('/user/pages/ProfileInfo');
-  };
-
-  const handleDistributorsClick = () => {
-    setIsMobileDropdownOpen(false);
-    navigate('/user/pages/StoreDetails');
-  };
-
-  const handleOrderHistoryClick = () => {
-    setIsMobileDropdownOpen(false);
-    navigate('/user/pages/OrderHistory');
-  };
-
+ const handleLogout = ()=>{
+  localStorage.removeItem("userData");
+  alert('Logout successfully');
+ }
   return (
     <nav>
       {screenWidth > 768 ? (
@@ -62,12 +45,13 @@ const NavBar = () => {
           <div className="user-dropdown">
             <img className="userLogo" src={userLogo} alt="" onClick={toggleDropdown} />
             {isDropdownOpen && (
-              <div className="dropdown-menu">
-                <a href="#" onClick={handleLoginClick}>Login</a>
-                <a href="#" onClick={handleProfileClick}>Profile</a>
-                <a href="#" onClick={handleOrderHistoryClick}>Orders</a>
-                <a href="#" onClick={handleDistributorsClick}>Distributors</a>
-                <a href="#">Logout</a>
+              <div className="userDropdownMenu">
+                <a href="/Auth/Login">Login</a>
+                <a href="/user/pages/ProfileInfo">Profile</a>
+                <a href="/user/pages/OrderHistory" >Orders</a>
+                <a href="/user/pages/StoreDetails" >Distributors</a>
+                <a href="/user/pages/Cart" >Add to Cart</a>
+                <a href="/" onClick={handleLogout}>Logout</a>
               </div>
             )}
           </div>
@@ -86,10 +70,11 @@ const NavBar = () => {
               <div className="dropdown-header">
                 <a href="#" onClick={toggleMobileDropdown} className="back-link">Back</a>
               </div>
-              <a href="#" onClick={handleLoginClick}>Login</a>
-              <a href="#" onClick={handleOrderHistoryClick}>Order History</a>
-              <a href="#" onClick={handleDistributorsClick}>Distributors</a>
-              <a href="#">Logout</a>
+              <a href="/Auth/Login" >Login</a>
+              <a href="/user/pages/OrderHistory" >Order History</a>
+              <a href="/user/pages/StoreDetails" >Distributors</a>
+              <a href="/user/pages/Cart" >Add to Cart</a>
+              <a href="/" onClick={handleLogout}>Logout</a>
             </div>
           )}
         </div>
