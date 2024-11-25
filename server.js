@@ -70,6 +70,9 @@ app.use('/api', ShipmentRoutes);
 const OrderRoutes = require('./routes/orderRoutes.js');
 app.use('/api', OrderRoutes);
 
+// const UserProfileRoutes = require('./routes/UserProfileRoutes.js');
+// app.use('/api', UserProfileRoutes);
+
 // Listen on the port from the .env file
 const PORT = process.env.PORT || 8000;
 app.listen(PORT, () => {

@@ -3,18 +3,28 @@ import "../pages/OrderHistory.css";
 import NavBar from "../components/NavBar";
 import axios from "axios";
 import baseurl from "../../apiService/apiService";
+import { useNavigate } from "react-router-dom";
 
 const OrderHistory = () => {
+  const navigate = useNavigate();
   const [expandedOrderId, setExpandedOrderId] = useState(null);
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const { uid } = JSON.parse(localStorage.getItem("userData"));
+  const LoggedUser = JSON.parse(localStorage.getItem('userData'));
+
+  // Function to toggle modal visibility
+  useEffect(() => {
+    if (!LoggedUser) {
+      navigate("/Auth/Login");
+    }
+  }, [LoggedUser, navigate]);
+
 
   useEffect(() => {
     const fetchOrders = async () => {
       try {
-        const response = await axios.get(`${baseurl}/api/userOrdersById/${uid}`);
+        const response = await axios.get(`${baseurl}/api/userOrdersById/${LoggedUser.uid}`);
         setOrders(response.data.data);
         setLoading(false);
       } catch (err) {
@@ -61,7 +71,7 @@ const OrderHistory = () => {
       <div className="order-history">
         <h2>Order History</h2>
         {orders.length === 0 ? (
-          <p>No orders found.</p>
+          <p style={{textAlign:'center'}}>No orders found.</p>
         ) : (
           <table className="order-table">
             <thead>

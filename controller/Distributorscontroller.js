@@ -1,6 +1,5 @@
 const Distributor = require('../model/Distributorsmodel');
 const DistributorImage = require('../model/DistributorImagesmodel');
-const { uploadDistributorImage } = require('../middlewares/multer');
 const { Op } = require('sequelize');
 
 
@@ -10,11 +9,13 @@ exports.addDistributor = async (req, res) => {
             // Create the distributor
             const distributor = await Distributor.create(req.body);
 
-            if (req.file) {
-                await DistributorImage.create({
+            if (req.files && req.files.length > 0) {
+                const imageEntries = req.files.map((file) => ({
                     distributor_id: distributor.did,
-                    image_path: req.file.path
-                });
+                    image_path: file.path,
+                }));
+
+                await DistributorImage.bulkCreate(imageEntries);
             }
 
             res.status(201).json({ message: 'Distributor added successfully', distributor });
@@ -64,40 +65,58 @@ exports.getDistributorById = async (req, res) => {
 // Update a distributor
 exports.updateDistributor = async (req, res) => {
     try {
-        const distributorId = req.params.id;
-        const distributor = await Distributor.findOne({ where: { did: distributorId } });
+        const distributor = await Distributor.findOne({
+            where: { did: req.params.id },
+            include: [{
+                model: DistributorImage,
+                as: 'image',
+                attributes: ['image_path']
+            }]
+        });
+
         if (!distributor) {
             return res.status(404).json({ message: 'Distributor not found' });
         }
-        await distributor.update(req.body);
-        if (req.file) {
-            const existingImage = await DistributorImage.findOne({ where: { distributor_id: distributorId } });
-            if (existingImage && existingImage.image_path) {
-                const oldImagePath = path.join(__dirname, '..', existingImage.image_path);
-                fs.unlink(oldImagePath, (err) => {
-                    if (err) {
-                        console.error('Error deleting old distributor image:', err);
-                    } else {
-                        console.log('Deleted old distributor image:', existingImage.image_path);
-                    }
-                });
-            }
-            if (existingImage) {
-                await existingImage.update({ image_path: req.file.path });
-            } else {
-                await DistributorImage.create({
-                    distributor_id: distributorId,
-                    image_path: req.file.path,
-                });
-            }
+
+        // Update distributor data if provided
+        if (Object.keys(req.body).length > 0) {
+            await distributor.update(req.body);
         }
 
-        res.status(200).json({ message: 'Distributor updated successfully', distributor });
+        // Handle new image uploads
+        if (req.files && req.files.length > 0) {
+            // Add new images
+            const newDistributorImages = req.files.map(file => ({
+                distributor_id: distributor.did,
+                image_path: file.path
+            }));
+            await DistributorImage.bulkCreate(newDistributorImages);
+        }
+
+        // Fetch updated distributor with images
+        const updatedDistributor = await Distributor.findOne({
+            where: { did: req.params.id },
+            include: [{
+                model: DistributorImage,
+                as: 'image',
+                attributes: ['image_path']
+            }]
+        });
+
+        res.status(200).json({
+            message: 'Distributor updated successfully',
+            distributor: updatedDistributor
+        });
+
     } catch (error) {
-        console.error('Error in updateDistributor:', error);
-        res.status(500).json({ error: error.message });
+        console.error('Error updating distributor:', error);
+        res.status(500).json({
+            error: error.message || 'Error updating distributor'
+        });
     }
 };
+
+
 
 // Delete a distributor
 exports.deleteDistributor = async (req, res) => {

@@ -12,13 +12,21 @@ import Distributors from "../components/products/Distributors";
 import DistributorsViewDetails from "../components/products/DistributorsViewDetails";
 import Transport from "../components/products/Transport";
 import "../pages/Dashboard.css";
+import Shipments from "../components/products/Shipments";
+// import { Settings } from "lucide-react";
+import Settings from "../components/products/Settings";
+import Accounts from "../components/Accounts";
 
 export default function Dashboard() {
   const [screenWidth, setScreenWidth] = useState(window.innerWidth);
-
-
   const navigate = useNavigate();
   const LoggedUser = JSON.parse(localStorage.getItem("userData"));
+
+  useEffect(() => {
+    if (!LoggedUser || LoggedUser.role !== 'admin') {
+      navigate('/Auth/Login');
+    }
+  }, [LoggedUser, navigate]);
 
   useEffect(() => {
     // Update screen width when window is resized
@@ -56,8 +64,11 @@ export default function Dashboard() {
               <Route path="distributors" element={<Distributors />} />
               <Route path="Distributors/DistributorsViewDetails/:id" element={<DistributorsViewDetails />} />
               <Route path="technicians" element={<Technicians />} />
+              <Route path="Shipments" element={<Shipments />} />
               <Route path="Transport" element={<Transport />} />
               <Route path="OrderSummary" element={<OrderSummary />} />
+              <Route path="Settings" element={<Settings />} />
+              <Route path="Accounts" element={<Accounts />} />
             </Routes>
           </main>
         </div>

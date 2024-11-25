@@ -12,5 +12,10 @@ router.post('/admin', adminRegistrationValidationRules(), validateUser, userCont
 // Login route
 router.post('/loginUser', userLoginValidationRules(), validateUser, userController.loginUser);
 
+router.put('/user/:id', validateUser, userController.updateUserProfile);
+
+router.get('/userprofile/:id', userController.getUserProfile);
+
+router.get('/allUsers', userController.getAllUsers);
 
 module.exports = router;

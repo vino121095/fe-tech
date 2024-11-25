@@ -9,7 +9,13 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #0024FF;
+  background-color: #f1f1f1;
+}
+.userDropdownMenu a{
+  font-weight: 600;
+  span{
+  margin-right: 10px;
+  }
 }
 
 .nav-1 p{

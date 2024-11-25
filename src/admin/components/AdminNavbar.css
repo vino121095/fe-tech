@@ -29,4 +29,17 @@ a.navbar-brand{
 #AdminNav{
     justify-content: space-evenly !important;
 }
-
+.notification-icon{
+    color: #0024FF !important;
+    background-color: #E5E8FF !important;
+}
+.notification-item:hover {
+    background-color: #E5E8FF !important; 
+    border-color: #E5E8FF !important; 
+    cursor: pointer;
+    .notification-icon{
+        background-color: white !important;
+    }
+  }
+  
+  

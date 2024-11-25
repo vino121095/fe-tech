@@ -7,11 +7,69 @@ import Propic from "../assets/profile-pic.png";
 import "../components/AdminNavbar.css";
 import hamburger from "../assets/hamburger.png";
 import AdminSidebar from "./AdminSidebar";
+import { X, Box, MessageCircle } from 'lucide-react';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/js/bootstrap.bundle.min';
 
 const AdminNavbar = () => {
   const [screenWidth, setScreenWidth] = useState(window.innerWidth);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const location = useLocation();
+  const [tab, setTab] = useState("");
+  const [showNotifications, setShowNotifications] = useState(false);
 
+  const notifications = [
+    {
+      id: 1,
+      type: 'order',
+      title: 'Order Received',
+      message: 'Lorem ipsum dolor sit amet consectetur. Eget gravida nisl faucibus egestas.'
+    },
+    {
+      id: 2,
+      type: 'order',
+      title: 'Order Received',
+      message: 'Lorem ipsum dolor sit amet consectetur. Eget gravida nisl faucibus egestas.'
+    },
+    {
+      id: 3,
+      type: 'complaint',
+      title: 'Complaint',
+      message: 'Lorem ipsum dolor sit amet consectetur. Eget gravida nisl faucibus egestas.'
+    },
+    {
+      id: 4,
+      type: 'order',
+      title: 'Order Received',
+      message: 'Lorem ipsum dolor sit amet consectetur. Eget gravida nisl faucibus egestas.'
+    },
+    {
+      id: 5,
+      type: 'order',
+      title: 'Order Received',
+      message: 'Lorem ipsum dolor sit amet consectetur. Eget gravida nisl faucibus egestas.'
+    }
+  ];
+
+  const getIcon = (type) => {
+    switch(type) {
+      case 'order':
+        return <Box className="w-6 h-6 text-blue-500" />;
+      case 'complaint':
+        return <MessageCircle className="w-6 h-6 text-blue-500" />;
+      default:
+        return <Box className="w-6 h-6 text-blue-500" />;
+    }
+  };
+
+  const handleClickNotify = (e) => {
+    e.preventDefault(); 
+    setShowNotifications(!showNotifications);
+  };
+    const handleLogout = () => {
+      localStorage.removeItem('userData');
+      window.location.href = '/Auth/Login';
+    };
   const handleHamburgerClick = () => {
     console.log("clicked");
     setIsSidebarOpen(true);
@@ -38,8 +96,7 @@ const AdminNavbar = () => {
     // Remove event listener on cleanup
     return () => window.removeEventListener("resize", handleResize);
   }, []);
-  const location = useLocation();
-  const [tab, setTab] = useState("");
+  
 
   useEffect(() => {
     // Update the `tab` based on the current pathname
@@ -68,12 +125,15 @@ const AdminNavbar = () => {
       case "/Dashboard/Transport":
         setTab("Transport");
         break;
-      default:
-        setTab("Nothing");
+        case "/Dashboard/Accounts":
+          setTab("Accounts");
+          break;
+          case "/Dashboard/Settings":
+        setTab("Settings");
         break;
     }
   }
-  }, [location.pathname]); // Only re-run the effect if the pathname changes
+  }, [location.pathname]);
 
   return (
     <>
@@ -116,14 +176,17 @@ const AdminNavbar = () => {
         border: "1px solid #ccc",
       }}
     />
-    <Nav.Link as={Link} to="/cart" style={{marginRight: '10px'}}>
+    <Nav.Link as={Link} to="" style={{marginRight: '10px'}} 
+      onClick={handleClickNotify}
+    >
       <img
         src={notify}
         alt="notify"
         style={{ marginTop: "7px" }}
       />
     </Nav.Link>
-    <Nav.Link as={Link} to="/logout">
+    <Nav.Link as={Link} to="/Auth/Login" data-bs-toggle="modal"
+        data-bs-target="#logoutModal">
       <img
         src={userLogo}
         alt="logout"
@@ -154,6 +217,95 @@ const AdminNavbar = () => {
           </div>
         )}
       </div>
+      <div
+        className="modal fade"
+        id="logoutModal"
+        tabIndex="-1"
+        aria-labelledby="logoutModalLabel"
+        aria-hidden="true"
+      >
+        <div className="modal-dialog modal-dialog-centered modal-md">
+          <div className="modal-content" style={{ height: '300px', display: 'flex', justifyContent: 'center' }}>
+            <div className="modal-header">
+              <h5 className="modal-title" id="logoutModalLabel">
+                Confirm Logout
+              </h5>
+              <button
+                type="button"
+                className="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div className="modal-body">
+              Are you sure you want to log out?
+            </div>
+            <div className="modal-footer">
+              <button
+                type="button"
+                className="btn btn-secondary"
+                data-bs-dismiss="modal"
+              >
+                Cancel
+              </button>
+              <button
+                type="button"
+                className="btn btn-danger"
+                onClick={handleLogout}
+                data-bs-dismiss="modal"
+              >
+                Logout
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      {showNotifications && (
+  <div className="position-fixed top-0 start-0 w-100 h-100 d-flex align-items-start justify-content-end" style={{ zIndex: 1000 }}>
+    {/* Semi-transparent background overlay */}
+    <div
+      className="position-fixed top-0 start-0 w-100 h-100 bg-dark bg-opacity-50"
+      onClick={() => setShowNotifications(false)}
+    ></div>
+
+    {/* Notification panel */}
+    <div className="position-relative bg-white mt-4 mx-3 rounded shadow-lg" style={{ maxWidth: '500px', width: '100%' }}>
+      <div className="p-3">
+        <div className="d-flex justify-content-between align-items-center mb-3">
+          <h2 className="h5 mb-0">Notification</h2>
+          <button
+            className="btn btn-link border border-danger rounded-circle text-decoration-none p-0 text-danger"
+            onClick={() => setShowNotifications(false)}
+          >
+            <X className="fs-5" />
+          </button>
+        </div>
+
+        <div className="overflow-auto" style={{ maxHeight: '70vh' }}>
+          {notifications.map((notification) => (
+            <div
+              key={notification.id}
+              className="d-flex align-items-start p-3 bg-white mb-2 notification-item"
+            >
+              <div
+                className="d-flex align-items-center justify-content-center flex-shrink-0 border rounded me-3 notification-icon"
+                style={{ width: '40px', height: '40px'}}
+              >
+                {getIcon(notification.type)}
+              </div>
+
+              <div className="flex-grow-1">
+                <p className="mb-1 fw-bold">{notification.title}</p>
+                <p className="mb-0 text-muted">{notification.message}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </div>
+)}
+
     </>
   );
 };

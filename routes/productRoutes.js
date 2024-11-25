@@ -13,7 +13,7 @@ router.get('/getAllProducts', productController.getAllProducts); //Get all produ
 
 router.get('/productDetail/:id', productController.getProductById); //Get product by id for product detail
 
-router.put('/updateproduct/:id', uploadProductImages, deleteOldImages, productValidationRules(), validateProduct, productController.updateProduct);
+router.put('/updateproduct/:id', uploadProductImages, deleteOldImages, productController.updateProduct);
 
 router.delete('/deleteProductById/:id', deleteOldImages, productController.deleteProduct); // Delete product by ID
 

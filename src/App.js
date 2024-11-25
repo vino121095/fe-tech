@@ -16,6 +16,9 @@ import OrderHistory from './user/pages/OrderHistory';
 import PaymentSuccess from './user/pages/PaymentSuccess';
 import FeedViews from './user/pages/FeedViews';
 import StoreDetails from './user/pages/StoreDetails'
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap-icons/font/bootstrap-icons.css';
+
 const App = () => {
   const [cartItems, setCartItems] = useState([]);
 

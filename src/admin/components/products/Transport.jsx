@@ -8,6 +8,7 @@ import "../products/Transport.css";
 
 const Transport = () => {
   const [selectedCity, setSelectedCity] = useState("");
+  const [filteredTransports, setFilteredTransport] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isViewModalOpen, setIsViewModalOpen] = useState(false);
@@ -77,12 +78,13 @@ const Transport = () => {
   const totalPages = Math.ceil(transports.length / itemsPerPage);
 
   const handleSearch = () => {
-    if (!selectedCity) {
-      alert("Please select a city first!");
-      return;
+    if (selectedCity) {
+      setFilteredTransport(
+        transports.filter(transport => transport.location === selectedCity)
+      );
+    } else {
+      setFilteredTransport(transports);
     }
-    // Implement your search logic here
-    alert(`You selected: ${selectedCity}`);
   };
 
   const handlePageChange = (pageNumber) => {
@@ -210,7 +212,7 @@ const Transport = () => {
         <div className="row justify-content-center align-items-center">
           <div className="col-md-6 mb-3">
             <select
-            style={{padding:'10px'}}
+              style={{ padding: '10px' }}
               className="transportSearch"
               value={selectedCity}
               onChange={(e) => setSelectedCity(e.target.value)}
@@ -218,14 +220,14 @@ const Transport = () => {
               <option value="" disabled>
                 Select a city
               </option>
-              {["Coimbatore", "Chennai", "Bangalore", "Mumbai", "Delhi"].map((city, index) => (
-                <option key={index} value={city}>
-                  {city}
+              {currentTransports.map((transport, index) => (
+                <option key={index} value={transport.location}>
+                  {transport.location}
                 </option>
               ))}
             </select>
           </div>
-
+  
           <div className="col-md-3">
             <button className="transportSearchBtn" onClick={handleSearch}>
               Search
@@ -236,7 +238,7 @@ const Transport = () => {
           </button>
         </div>
       </div>
-
+  
       <table className="products-table">
         <thead>
           <tr>
@@ -249,10 +251,8 @@ const Transport = () => {
           </tr>
         </thead>
         <tbody>
-          {Array.isArray(currentTransports) && currentTransports.map((transport, index) => {
-            if (!transport || typeof transport !== 'object') return null;
-            
-            return (
+          {filteredTransports.length > 0 ? (
+            filteredTransports.map((transport, index) => (
               <tr key={transport.tid || index}>
                 <td>{index + 1 + indexOfFirstTransport}</td>
                 <td>{transport.location || "N/A"}</td>
@@ -274,23 +274,34 @@ const Transport = () => {
                   />
                 </td>
               </tr>
-            );
-          })}
-          {(!Array.isArray(currentTransports) || currentTransports.length === 0) && (
+            ))
+          ) : (
             <tr>
-              <td colSpan="6" className="text-center">No transports found</td>
+              <td colSpan="6" className="text-center">
+                No transports found in this location
+              </td>
+            </tr>
+          )}
+  
+          {filteredTransports.length === 0 && currentTransports.length === 0 && (
+            <tr>
+              <td colSpan="6" className="text-center">
+                No transports found
+              </td>
             </tr>
           )}
         </tbody>
       </table>
-
+  
       <div className="container d-flex mt-2 justify-content-between">
         <div className="results-count text-center mb-3">
-          Showing {currentTransports.length === 0 ? "0" : "1"} to {currentTransports.length} of{" "}
-          {transports.length} entries
+          Showing {currentTransports.length === 0 ? "0" : "1"} to {currentTransports.length} of {transports.length} entries
         </div>
         <Pagination className="justify-content-center" style={{ gap: "10px" }}>
-          <Pagination.Prev onClick={() => handlePageChange(currentPage - 1)} disabled={currentPage === 1}>
+          <Pagination.Prev
+            onClick={() => handlePageChange(currentPage - 1)}
+            disabled={currentPage === 1}
+          >
             <MdChevronLeft />
           </Pagination.Prev>
           {[...Array(totalPages)].map((_, index) => (
@@ -310,66 +321,64 @@ const Transport = () => {
           </Pagination.Next>
         </Pagination>
       </div>
-{isViewModalOpen && viewTransport && (
-  <div className="modal-overlay" onClick={closeViewModal}>
-    <div className="modal-content transport-modal" onClick={(e) => e.stopPropagation()}>
-      <div className="modal-header d-flex justify-content-between align-items-center mb-4">
-        <h2>Transport Details</h2>
-        <button 
-          onClick={closeViewModal}
-          className="btn-close"
-          aria-label="Close"
-        ></button>
-      </div>
-      <div className="transport-details">
-        <div className="row mb-3">
-          <div className="col-md-6">
-            <div className="detail-group">
-              <label className="fw-bold">Transport Name:</label>
-              <p className="detail-value">{viewTransport.travels_name || 'N/A'}</p>
+  
+      {isViewModalOpen && viewTransport && (
+        <div className="modal-overlay" onClick={closeViewModal}>
+          <div className="modal-content transport-modal" onClick={(e) => e.stopPropagation()}>
+            <div className="modal-header d-flex justify-content-between align-items-center mb-4">
+              <h2>Transport Details</h2>
+              <button onClick={closeViewModal} className="btn-close" aria-label="Close"></button>
             </div>
-          </div>
-          <div className="col-md-6">
-            <div className="detail-group">
-              <label className="fw-bold">Location:</label>
-              <p className="detail-value">{viewTransport.location || 'N/A'}</p>
+            <div className="transport-details">
+              <div className="row mb-3">
+                <div className="col-md-6">
+                  <div className="detail-group">
+                    <label className="fw-bold">Transport Name:</label>
+                    <p className="detail-value">{viewTransport.travels_name || 'N/A'}</p>
+                  </div>
+                </div>
+                <div className="col-md-6">
+                  <div className="detail-group">
+                    <label className="fw-bold">Location:</label>
+                    <p className="detail-value">{viewTransport.location || 'N/A'}</p>
+                  </div>
+                </div>
+              </div>
+  
+              <div className="row mb-3">
+                <div className="col-md-6">
+                  <div className="detail-group">
+                    <label className="fw-bold">Driver Name:</label>
+                    <p className="detail-value">{viewTransport.dirver_name || 'N/A'}</p>
+                  </div>
+                </div>
+                <div className="col-md-6">
+                  <div className="detail-group">
+                    <label className="fw-bold">Contact Person:</label>
+                    <p className="detail-value">{viewTransport.contact_person_name || 'N/A'}</p>
+                  </div>
+                </div>
+              </div>
+  
+              <div className="row mb-3">
+                <div className="col-md-6">
+                  <div className="detail-group">
+                    <label className="fw-bold">Phone Number:</label>
+                    <p className="detail-value">{viewTransport.phone || 'N/A'}</p>
+                  </div>
+                </div>
+                <div className="col-md-6">
+                  <div className="detail-group">
+                    <label className="fw-bold">Email:</label>
+                    <p className="detail-value">{viewTransport.email || 'N/A'}</p>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
-
-        <div className="row mb-3">
-          <div className="col-md-6">
-            <div className="detail-group">
-              <label className="fw-bold">Driver Name:</label>
-              <p className="detail-value">{viewTransport.dirver_name || 'N/A'}</p>
-            </div>
-          </div>
-          <div className="col-md-6">
-            <div className="detail-group">
-              <label className="fw-bold">Contact Person:</label>
-              <p className="detail-value">{viewTransport.contact_person_name || 'N/A'}</p>
-            </div>
-          </div>
-        </div>
-
-        <div className="row mb-3">
-          <div className="col-md-6">
-            <div className="detail-group">
-              <label className="fw-bold">Phone Number:</label>
-              <p className="detail-value">{viewTransport.phone || 'N/A'}</p>
-            </div>
-          </div>``
-          <div className="col-md-6">
-            <div className="detail-group">
-              <label className="fw-bold">Email:</label>
-              <p className="detail-value">{viewTransport.email || 'N/A'}</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-)}
+      )}
+  
       {isModalOpen && (
         <div className="modal-overlay" onClick={toggleModal}>
           <div className="modal-content transport-modal" onClick={(e) => e.stopPropagation()}>
@@ -431,7 +440,7 @@ const Transport = () => {
                       onChange={handleInputChange}
                       required
                       pattern="\d{10}"
-                      title="Please enter a valid 10-digit phone number"
+                      title="Please enter a 10-digit phone number"
                     />
                   </div>
                 </div>
@@ -448,16 +457,16 @@ const Transport = () => {
                   />
                 </div>
               </div>
-              <button type="submit" className="submit-button">
-                Submit
+              <button type="submit" className="btn-submit">
+                {currentTransport.tid ? "Update" : "Add Transport"}
               </button>
             </form>
           </div>
         </div>
       )}
-      
     </>
   );
+  
 };
 
 export default Transport;

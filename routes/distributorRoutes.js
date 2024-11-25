@@ -15,7 +15,7 @@ router.get('/getDistributorById/:id', Distributorscontroller.getDistributorById 
 
 router.get('/searchDistributor', Distributorscontroller.searchDistributors);
 
-router.put('/updateDistributorById/:id', uploadDistributorImage, deleteDistributorsimages, distributorValidationRules(), validateDistributor, Distributorscontroller.updateDistributor ); // update distributors details by id
+router.put('/updateDistributorById/:id', uploadDistributorImage, deleteDistributorsimages, Distributorscontroller.updateDistributor ); // update distributors details by id
 
 router.delete('/deleteDistributorById/:id', deleteDistributorsimages, Distributorscontroller.deleteDistributor ); // detele distributor by id
 

@@ -19,7 +19,7 @@
 
 .transportSearch:focus {
   outline: none;
-  border-color: #0054FF;
+  border: none;
   box-shadow: 0 0 0 2px rgba(0, 84, 255, 0.1);
 }
 
@@ -155,7 +155,8 @@
   box-shadow: 0 0 0 2px rgba(0, 84, 255, 0.1);
 }
 
-.submit-button {
+.btn-submit{
+  width: 20%;
   background-color: #0054FF;
   color: #fff;
   padding: 12px;
@@ -166,7 +167,7 @@
   transition: background-color 0.3s ease;
 }
 
-.submit-button:hover {
+.btn-submit:hover {
   background-color: #0043cc;
 }
 

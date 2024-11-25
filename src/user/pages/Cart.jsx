@@ -14,21 +14,15 @@ const Cart = () => {
 
   useEffect(() => {
     if (!LoggedUser || LoggedUser.role !== 'user') {
-      navigate("/Auth/login"); // Redirect if not logged in or not an admin
+      navigate("/Auth/login");
     }
   }, [LoggedUser, navigate]);
-
-  // if (!LoggedUser || LoggedUser.isAdmin !== 0) {
-  //   return ; // Prevent rendering if navigating away
-  // }
 
   useEffect(() => {
     if (userId) {
       const fetchCartData = async () => {
         try {
-          const response = await axios.get(
-            baseurl+`/api/user/${userId}`
-          );
+          const response = await axios.get(baseurl + `/api/user/${userId}`);
           const items = response.data.map((item) => ({
             ...item,
           }));
@@ -40,7 +34,7 @@ const Cart = () => {
       };
       fetchCartData();
     }
-  }, []);
+  }, [userId]);
 
   const calculateTotal = (items) => {
     const total = items.reduce(
@@ -51,48 +45,57 @@ const Cart = () => {
   };
 
   const handleQuantityChange = async (cartId, increment) => {
-    // Create a new array for updated items with updated quantities and send PUT requests
     const updatedItems = await Promise.all(
       cartItems.map(async (item) => {
         if (item.cid === cartId) {
           const newQuantity = increment
             ? item.quantity + 1
             : Math.max(item.quantity - 1, 1);
-  
+
           try {
             await axios.put(`${baseurl}/api/update/${item.cid}`, { quantity: newQuantity });
           } catch (error) {
             alert(`Error updating quantity for ${item.product_id}: ${error.message}`);
           }
-  
+
           return { ...item, quantity: newQuantity };
         }
         return item;
       })
     );
-  
+
     setCartItems(updatedItems);
     calculateTotal(updatedItems);
   };
+
+  const handleRemoveItem = async (cartId) => {
+    try {
+      // Use the new API to remove the cart item
+      await axios.delete(`${baseurl}/api/remove/${cartId}`);
+      
+      // Filter out the removed item from the local state
+      const updatedItems = cartItems.filter((item) => item.cid !== cartId);
+      setCartItems(updatedItems);
+      calculateTotal(updatedItems);
+    } catch (error) {
+      alert(`Error removing item from cart: ${error.message}`);
+    }
+  };
   
+
   const handlecheckout = async () => {
     try {
-      // Send POST request with user_id to place the order
-      await axios.post(baseurl+"/api/placeOrder", { user_id: userId });
-
-      // Navigate to the checkout page upon successful order placement
+      await axios.post(baseurl + "/api/placeOrder", { user_id: userId });
       navigate("/user/checkout");
     } catch (error) {
       console.error("Error placing order:", error);
-      // Optionally, handle error state or display an error message here
     }
-    navigate("/user/checkout");
   };
 
   return (
     <>
       <NavBar />
-      <div className="cart-container"> 
+      <div className="cart-container">
         <div className="cart-content">
           <h2 className="carItems">Your Cart: {cartItems.length} items</h2>
           <table className="cart-table">
@@ -102,6 +105,7 @@ const Cart = () => {
                 <th>Price</th>
                 <th>Quantity</th>
                 <th>Total Price</th>
+                <th>Actions</th>
               </tr>
             </thead>
             <tbody>
@@ -109,7 +113,7 @@ const Cart = () => {
                 <tr key={item.cid}>
                   <td className="product-details">
                     <img
-                      src={baseurl+`/${item.product.images[0].image_path}`}
+                      src={baseurl + `/${item.product.images[0].image_path}`}
                       alt={item.name}
                       className="product-images"
                     />
@@ -140,6 +144,14 @@ const Cart = () => {
                   </td>
                   <td className="total-price">
                     Rs {(Number(item.product.mrp_rate || 0) * item.quantity).toFixed(2)}
+                  </td>
+                  <td className="actions">
+                    <button
+                      className="remove-button"
+                      onClick={() => handleRemoveItem(item.cid)}
+                    >
+                      Remove
+                    </button>
                   </td>
                 </tr>
               ))}

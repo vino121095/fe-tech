@@ -21,7 +21,7 @@ const distributorValidationRules = () => {
       .notEmpty().withMessage('Email is required')
       .isEmail().withMessage('Email must be a valid email address.'),
     body('image')
-      .custom((value, { req }) => !!req.file)
+      .custom((value, { req }) => !!req.files)
       .withMessage('Please upload an image file.')
   ];
 };

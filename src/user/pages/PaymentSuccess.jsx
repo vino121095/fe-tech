@@ -1,10 +1,20 @@
 import React from "react";
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./PaymentSuccess.css";
 import NavBar from "../components/NavBar";
 import logo from '../assets/payment logo.png'
 const PaymentSuccess = () => {
   const navigate = useNavigate();
+  const LoggedUser = JSON.parse(localStorage.getItem('userData'));
+
+  // Function to toggle modal visibility
+  useEffect(() => {
+    if (!LoggedUser) {
+      navigate("/Auth/Login");
+    }
+  }, [LoggedUser, navigate]);
+
   const styles = {
     container: {
       display: "flex",

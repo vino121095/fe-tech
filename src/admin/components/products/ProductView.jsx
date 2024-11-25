@@ -12,17 +12,16 @@ const ProductView = () => {
  
   // Fetch products from API
   useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        const response = await axios.get(baseurl+'/api/getAllProducts');
-        setProducts(response.data); // Assuming response data is an array of products
-      } catch (error) {
-        console.error('Error fetching products:', error);
-      }
-    };
- 
     fetchProducts();
   }, []);
+  const fetchProducts = async () => {
+    try {
+      const response = await axios.get(baseurl+'/api/getAllProducts');
+      setProducts(response.data); // Assuming response data is an array of products
+    } catch (error) {
+      console.error('Error fetching products:', error);
+    }
+  };
  
   // Navigate to product details
   const handleProductViewDetails = (product) => {
@@ -33,8 +32,8 @@ const ProductView = () => {
   return (
     <div className="productViewContainer">
       {products.map((product) => (
-        <div key={product.id} className="productViewCard">
-          <img src={baseurl+`/${product.images[0].image_path}`|| compressor} alt={product.name} />
+        <div key={product.pid} className="productViewCard">
+          <img src={baseurl+`/${product.images[0].image_path}`|| compressor} alt={product.product_name} />
           <p>{product.product_name}</p>
           <div className="line"><span></span></div>
           <div className="productMrp"><h4>Rs-{product.mrp_rate}</h4></div>
