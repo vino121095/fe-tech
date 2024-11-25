@@ -1,2 +1,2 @@
-const baseurl ='http://localhost:8000'
+const baseurl ='https://web.rimhub.in/'
 export default baseurl
