@@ -1,0 +1,232 @@
+/* Shipment Container */
+.shipment-container {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    padding: 20px;
+    background-color: #f9f9f9;
+  }
+  
+  /* Shipment Analysis Section */
+  .shipment-analysis {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+  }
+  
+  .chart {
+    flex: 3;
+    background-color: white;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  .bar-chart {
+    display: flex;
+    align-items: flex-end;
+    gap: 10px;
+    margin-top: 20px;
+  }
+  
+  .bar {
+    width: 25px;
+    background-color: lightblue;
+    border-radius: 4px;
+    position: relative;
+    transition: background-color 0.3s ease;
+  }
+  
+  .bar.active {
+    background-color: blue;
+  }
+  
+  .bar .label {
+    position: absolute;
+    top: -25px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 12px;
+    color: #fff;
+    font-weight: bold;
+    background-color: orange;
+    padding: 2px 4px;
+    border-radius: 4px;
+  }
+  
+  .bar-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+  }
+  
+  .month-label {
+    font-size: 12px;
+    color: #555;
+  }
+  
+  .statistics {
+    flex: 2;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .stat-card {
+    background-color: white;
+    border-radius: 8px;
+    padding: 15px;
+    text-align: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  .stat-card h3 {
+    margin: 0;
+    font-size: 16px;
+    color: #555;
+  }
+  
+  .stat-card p {
+    font-size: 24px;
+    font-weight: bold;
+    margin: 5px 0 0;
+  }
+  
+  /* Shipment List Section */
+  .shipment-list {
+    background-color: white;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  .shipment-list h2 {
+    margin-bottom: 20px;
+  }
+  
+  .search-input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .shipment-list-container {
+    overflow-x: auto;
+  }
+  
+  .table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 600px; /* Ensure table doesn't shrink on smaller screens */
+  }
+  
+  .table th,
+  .table td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .table th {
+    background-color: #f4f4f4;
+  }
+  
+  .btn-success {
+    background-color: green;
+    color: white;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .btn-success:hover {
+    background-color: darkgreen;
+  }
+  
+  /* Mobile-specific styles */
+  @media (max-width: 430px) {
+    .shipment-container {
+      padding: 10px;
+      font-size: 14px;
+    }
+  
+    .shipment-analysis {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+  
+    .chart {
+      width: 100%;
+    }
+  
+    .bar-chart {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+  
+    .bar-container {
+      width: 20%;
+      margin: 5px 2px;
+    }
+  
+    .bar {
+      width: 100%;
+    }
+  
+    .month-label {
+      font-size: 12px;
+      text-align: center;
+    }
+  
+    .statistics {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      margin-top: 20px;
+    }
+  
+    .stat-card {
+      width: 100%;
+      margin-bottom: 10px;
+      text-align: center;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+    }
+  
+    .shipment-list {
+      margin-top: 20px;
+    }
+  
+    .shipment-list-container {
+      overflow-x: auto;
+    }
+  
+    .search-input {
+      width: 100%;
+      margin-bottom: 10px;
+      padding: 10px;
+      font-size: 14px;
+    }
+  
+    table {
+      font-size: 12px;
+    }
+  
+    th,
+    td {
+      padding: 8px;
+    }
+  
+    .btn {
+      padding: 5px 10px;
+      font-size: 12px;
+    }
+  }
+  

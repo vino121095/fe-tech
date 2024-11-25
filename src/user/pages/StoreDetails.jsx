@@ -1,5 +1,6 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import storeImg from "../assets/store-img.png";
 import rating from "../assets/rating.png";
 import '../pages/StoreDetails.css'
@@ -10,6 +11,16 @@ import NavbarSearch from "../components/NavbarSearch";
 
 const StoreDetails = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const navigate = useNavigate()
+    const LoggedUser = JSON.parse(localStorage.getItem('userData'));
+
+    // Function to toggle modal visibility
+    useEffect(() => {
+      if (!LoggedUser) {
+        navigate("/Auth/Login");
+      }
+    }, [LoggedUser, navigate]);
+  
 
   // Function to toggle modal visibility
   const toggleModal = () => {

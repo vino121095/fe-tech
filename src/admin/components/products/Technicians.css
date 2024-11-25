@@ -1,0 +1,258 @@
+/* Base container styles */
+.container {
+    width: 100%;
+    padding: 15px;
+    margin: 0 auto;
+  }
+  
+  /* Search section styles */
+  #technicianSearchBox {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    max-width: 400px;
+    position: relative;
+  }
+  
+  #technicianSearchBox .search-input {
+    width: 100%;
+    height: 50px;
+    padding: 0 40px 0 15px;
+    background-color: transparent;
+    border-radius: 25px;
+    font-size: 16px;
+    border: 1px solid #808080;
+    transition: all 0.3s ease;
+}
+
+#technicianSearchBox .search-input:focus {
+    outline: 0 !important;
+    box-shadow: none !important;
+}
+  
+  #technicianSearchBox .searchIcons {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+  }
+  
+  #technicianSearchBox .searchIcons i {
+    color: #808080;
+    font-size: 18px;
+  }
+  
+  .searches {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  @media screen and (max-width: 768px) {
+    .searches {
+      flex-direction: column;
+      align-items: stretch;
+    }
+  
+    #technicianSearchBox {
+      max-width: 100%;
+      margin-bottom: 10px;
+    }
+  }
+  
+  #AddTechnicianBtn {
+    width: auto !important;
+    background-color:#f24e1e;
+    color: #fff;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px !important;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin: 10px 0;
+  }
+  
+  /* Table styles */
+ /* Container for table with scrolling */
+.table-container {
+  overflow-x: auto; /* Enables horizontal scrolling */
+  width: 100%; /* Full width of parent */
+}
+
+.technicians-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+  background: #fff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  min-width: 800px; /* Ensures table has a minimum width */
+}
+
+/* Existing table styles remain the same */
+.technicians-table th,
+.technicians-table td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #eee;
+}
+
+.technicians-table th {
+  background-color: #f8f9fa;
+  font-weight: 600;
+  position: sticky; /* Optional: makes header stick while scrolling */
+  top: 0;
+  z-index: 10;
+}
+
+.technicians-table tbody tr:hover {
+  background-color: #f8f9fa;
+}
+  
+  /* Technician icon */
+  .technician-icon {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: #0054FF;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  /* Status icons container */
+  .status {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+  }
+  
+  /* Modal styles */
+  .modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+  
+  .modal-content {
+    background: #fff;
+    padding: 25px;
+    border-radius: 8px;
+    width: 90%;
+    max-width: 600px;
+    max-height: 90vh;
+    overflow-y: auto;
+  }
+  
+  /* Form styles */
+  .technicianPopupForm {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .technicianPopupForm label {
+    margin-bottom: 8px;
+    font-weight: 500;
+  }
+  
+  .technicianPopupForm input,
+  .technicianPopupForm textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+  }
+  
+  .technicianPopupForm input:focus,
+  .technicianPopupForm textarea:focus {
+    outline: none;
+    border-color: #0054FF;
+    box-shadow: 0 0 0 2px rgba(0, 84, 255, 0.1);
+  }
+  
+  .btn-save {
+    background-color: #0054FF;
+    color: #fff;
+    padding: 12px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+    margin-top: 20px;
+  }
+  
+  .btn-save:hover {
+    background-color: #0043cc;
+  }
+  
+  /* Results count styles */
+  .results-count {
+    color: #666;
+    font-size: 14px;
+  }
+  
+  /* Responsive styles */
+  @media screen and (max-width: 768px) {
+    .technicianPopupForm > .container {
+      flex-direction: column !important;
+    }
+  
+    .technicianPopupForm .w-50 {
+      width: 100% !important;
+    }
+    .technicians-table{
+      overflow-x: scroll !important;
+    }
+  
+    .modal-content {
+      width: 95%;
+      padding: 15px;
+    }
+    #AddTechnicianBtn {
+      width: max-content !important;
+      background-color:#f24e1e;
+      color: #fff;
+      text-wrap: nowrap;
+      padding: 6px 12px;
+      border: none;
+      border-radius: 5px;
+      font-size: 13px !important;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      margin: 10px 0;
+    }
+  }
+  
+  /* Pagination adjustments */
+  .technicianPagination .pagination {
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+    margin: 20px 0;
+  }
+  
+  .technicianPagination .pagination .page-item .page-link {
+    padding: 8px 12px;
+    border: 1px solid #dee2e6;
+    color: #0054FF;
+    background-color: #fff;
+    cursor: pointer;
+  }
+  
+  .technicianPagination .pagination .page-item.active .page-link {
+    background-color: #0054FF;
+    color: #fff;
+    border-color: #0054FF;
+  }

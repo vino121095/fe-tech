@@ -34,6 +34,6 @@ const uploadDistributorImage = multer({
     storage,
     limits: { fileSize: 5 * 1024 * 1024 }, // 5MB file size limit
     fileFilter,
-}).single('image'); // Accept only 1 image
+}).array('image', 3); // Accept only 1 image
 
 module.exports = { uploadProductImages, uploadDistributorImage };

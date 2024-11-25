@@ -19,6 +19,17 @@ const userRegistrationValidationRules = () => {
             .custom((value, { req }) => value === req.body.password).withMessage('Password and confirm password do not match.')
     ];
 };
+const adminRegistrationValidationRules = () => {
+    return [
+        body('email')
+            .notEmpty().withMessage('Email is required.')
+            .isEmail().withMessage('Please provide a valid email address.')
+            .normalizeEmail(),
+        body('password')
+            .notEmpty().withMessage('Password is required.')
+            .isLength({ min: 6 }).withMessage('Password must be at least 6 characters long.'),
+    ];
+};
 
 // Login validation rules
 const userLoginValidationRules = () => {
@@ -44,6 +55,7 @@ const validateUser = (req, res, next) => {
 
 module.exports = {
     userRegistrationValidationRules,
+    adminRegistrationValidationRules,
     userLoginValidationRules,
     validateUser
 };

@@ -4,6 +4,9 @@ const DistributorImage = require('../model/DistributorImagesmodel');
 
 const deleteDistributorImage = async (req, res, next) => {
     try {
+        if (!req.files || req.files.length === 0) {
+            return next();
+        }
         const distributorId = req.params.id;
         const existingImage = await DistributorImage.findOne({
             where: { distributor_id: distributorId }

@@ -54,9 +54,9 @@ const DistributorsViewDetails = () => {
         <div className="productDetailsContainer" style={{ width: '80%' }}>
             <section className="section-1">
                 <div className="productImageSection">
-                    {distributor?.images ? (
+                    {distributor?.image ? (
                         <img 
-                            src={`${baseurl}/${distributor.images}`} 
+                            src={`${baseurl}/${distributor.image[0].image_path}`} 
                             alt="Distributor" 
                             className="mainImage" 
                             onError={(e) => {

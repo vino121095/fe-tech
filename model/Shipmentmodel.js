@@ -3,11 +3,11 @@ const sequelize = require('../config/db');
 const Order = require('./Ordermodel');
 const Product = require('./Productmodel');
 
-
 const Shipment = sequelize.define('Shipment', {
     sid: {
         type: DataTypes.INTEGER,
         primaryKey: true,
+        autoIncrement: true, 
         allowNull: false,
     },
     shipment_id: {
@@ -21,6 +21,14 @@ const Shipment = sequelize.define('Shipment', {
         references: {
             model: Order,
             key: 'order_id'
+        }
+    },
+    product_id: { 
+        type: DataTypes.STRING,
+        allowNull: false,
+        references: {
+            model: Product,
+            key: 'product_id'
         }
     },
     distributor_name: {
@@ -62,6 +70,7 @@ const Shipment = sequelize.define('Shipment', {
     timestamps: true,  
 });
 
+// Define associations
 Shipment.belongsTo(Order, { foreignKey: 'order_id', as: 'order' });
 Shipment.belongsTo(Product, { foreignKey: 'product_id', as: 'product' });
 

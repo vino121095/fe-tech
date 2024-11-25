@@ -10,26 +10,20 @@ const Cart = () => {
   const [cartItems, setCartItems] = useState([]);
   const [totalAmount, setTotalAmount] = useState(0);
   const LoggedUser = JSON.parse(localStorage.getItem("userData"));
-  const userId = LoggedUser?.user_id;
+  const userId = LoggedUser?.uid;
 
   useEffect(() => {
-    if (!LoggedUser || LoggedUser.isAdmin !== 0) {
-      navigate("/Auth/login"); // Redirect if not logged in or not an admin
+    if (!LoggedUser || LoggedUser.role !== 'user') {
+      navigate("/Auth/login");
     }
   }, [LoggedUser, navigate]);
-
-  // if (!LoggedUser || LoggedUser.isAdmin !== 0) {
-  //   return ; // Prevent rendering if navigating away
-  // }
 
   useEffect(() => {
     if (userId) {
       const fetchCartData = async () => {
         try {
-          const response = await axios.get(
-            baseurl+`/rim/user/${userId}`
-          );
-          const items = response.data.cartItems.map((item) => ({
+          const response = await axios.get(baseurl + `/api/user/${userId}`);
+          const items = response.data.map((item) => ({
             ...item,
           }));
           setCartItems(items);
@@ -40,59 +34,68 @@ const Cart = () => {
       };
       fetchCartData();
     }
-  }, []);
+  }, [userId]);
 
   const calculateTotal = (items) => {
     const total = items.reduce(
-      (total, item) => total + Number(item.mrp_rate || 0) * item.quantity,
+      (total, item) => total + Number(item.product.mrp_rate || 0) * item.quantity,
       0
     );
     setTotalAmount(total);
   };
 
-  const handleQuantityChange = async (productId, increment) => {
-    // Create a new array for updated items with updated quantities and send PUT requests
+  const handleQuantityChange = async (cartId, increment) => {
     const updatedItems = await Promise.all(
       cartItems.map(async (item) => {
-        if (item.product_id === productId) {
+        if (item.cid === cartId) {
           const newQuantity = increment
             ? item.quantity + 1
             : Math.max(item.quantity - 1, 1);
-  
+
           try {
-            await axios.put(`${baseurl}/rim/update/${item.cart_id}`, { quantity: newQuantity });
+            await axios.put(`${baseurl}/api/update/${item.cid}`, { quantity: newQuantity });
           } catch (error) {
             alert(`Error updating quantity for ${item.product_id}: ${error.message}`);
           }
-  
+
           return { ...item, quantity: newQuantity };
         }
         return item;
       })
     );
-  
+
     setCartItems(updatedItems);
     calculateTotal(updatedItems);
   };
+
+  const handleRemoveItem = async (cartId) => {
+    try {
+      // Use the new API to remove the cart item
+      await axios.delete(`${baseurl}/api/remove/${cartId}`);
+      
+      // Filter out the removed item from the local state
+      const updatedItems = cartItems.filter((item) => item.cid !== cartId);
+      setCartItems(updatedItems);
+      calculateTotal(updatedItems);
+    } catch (error) {
+      alert(`Error removing item from cart: ${error.message}`);
+    }
+  };
   
+
   const handlecheckout = async () => {
     try {
-      // Send POST request with user_id to place the order
-      await axios.post(baseurl+"/rim/placeOrder", { userId: userId });
-
-      // Navigate to the checkout page upon successful order placement
+      await axios.post(baseurl + "/api/placeOrder", { user_id: userId });
       navigate("/user/checkout");
     } catch (error) {
       console.error("Error placing order:", error);
-      // Optionally, handle error state or display an error message here
     }
-    navigate("/user/checkout");
   };
 
   return (
     <>
       <NavBar />
-      <div className="cart-container"> 
+      <div className="cart-container">
         <div className="cart-content">
           <h2 className="carItems">Your Cart: {cartItems.length} items</h2>
           <table className="cart-table">
@@ -102,28 +105,29 @@ const Cart = () => {
                 <th>Price</th>
                 <th>Quantity</th>
                 <th>Total Price</th>
+                <th>Actions</th>
               </tr>
             </thead>
             <tbody>
               {cartItems.map((item) => (
-                <tr key={item.product_id}>
+                <tr key={item.cid}>
                   <td className="product-details">
                     <img
-                      src={baseurl+`/${item.first_image}`}
+                      src={baseurl + `/${item.product.images[0].image_path}`}
                       alt={item.name}
                       className="product-images"
                     />
                     <div className="product-info">
-                      <p className="product-name">{item.name}</p>
-                      <p className="product-category">{item.brand_name}</p>
+                      <p className="product-name">{item.product.product_name}</p>
+                      <p className="product-category">{item.product.brand_name}</p>
                     </div>
                   </td>
-                  <td className="product-mrp">Rs {Number(item.mrp_rate || 0).toFixed(2)}</td>
+                  <td className="product-mrp">Rs {Number(item.product.mrp_rate || 0).toFixed(2)}</td>
                   <td className="quantity-controls">
                     <div className="btnControl">
                       <button
                         onClick={() =>
-                          handleQuantityChange(item.product_id, false)
+                          handleQuantityChange(item.cid, false)
                         }
                       >
                         -
@@ -131,7 +135,7 @@ const Cart = () => {
                       <span>{item.quantity}</span>
                       <button
                         onClick={() =>
-                          handleQuantityChange(item.product_id, true)
+                          handleQuantityChange(item.cid, true)
                         }
                       >
                         +
@@ -139,7 +143,15 @@ const Cart = () => {
                     </div>
                   </td>
                   <td className="total-price">
-                    Rs {(Number(item.mrp_rate || 0) * item.quantity).toFixed(2)}
+                    Rs {(Number(item.product.mrp_rate || 0) * item.quantity).toFixed(2)}
+                  </td>
+                  <td className="actions">
+                    <button
+                      className="remove-button"
+                      onClick={() => handleRemoveItem(item.cid)}
+                    >
+                      Remove
+                    </button>
                   </td>
                 </tr>
               ))}

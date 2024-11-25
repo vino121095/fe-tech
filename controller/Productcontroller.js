@@ -63,22 +63,53 @@ exports.getProductById = async (req, res) => {
 
 exports.updateProduct = async (req, res) => {
     try {
-        const product = await Product.findOne({ where: { pid: req.params.id } });
+        const product = await Product.findOne({ 
+            where: { pid: req.params.id },
+            include: [{
+                model: ProductImage,
+                as : 'images',
+                attributes: ['image_path']
+            }]
+        });
+
         if (!product) {
             return res.status(404).json({ message: 'Product not found' });
         }
-        await product.update(req.body);
+
+        // Update product data if provided
+        if (Object.keys(req.body).length > 0) {
+            await product.update(req.body);
+        }
+
+        // Handle new image uploads
         if (req.files && req.files.length > 0) {
-            const productImages = req.files.map(file => ({
+            const newProductImages = req.files.map(file => ({
                 product_id: product.pid,
                 image_path: file.path
             }));
-            await ProductImage.bulkCreate(productImages);
+            await ProductImage.bulkCreate(newProductImages);
         }
-        res.status(200).json({ message: 'Product updated successfully', product });
+
+        // Fetch updated product with images
+        const updatedProduct = await Product.findOne({
+            where: { pid: req.params.id },
+            include: [{
+                model: ProductImage,
+                as: 'images',
+                attributes: ['image_path']
+            }]
+        });
+
+        res.status(200).json({
+            message: 'Product updated successfully',
+            product: updatedProduct
+        });
+
     } catch (error) {
-        console.error(error);
-        res.status(500).json({ error: error.message });
+        console.error('Error updating product:', error);
+        res.status(500).json({
+            error: error.message || 'Error updating product'
+        });
     }
 };
 

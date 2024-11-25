@@ -4,6 +4,10 @@ const ProductImage = require('../model/productImagesmodel');
 
 const deleteOldImages = async (req, res, next) => {
     try {
+        if (!req.files || req.files.length === 0) {
+            return next();
+        }
+        
         const id = req.params.id;
         const existingImages = await ProductImage.findAll({
             where: { product_id: id }

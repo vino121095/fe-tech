@@ -100,7 +100,7 @@
 }
 
 .FeedCardContainer {
-  margin-top: 70px;
+  margin-top: 20px;
   justify-content: center;
 }
 
@@ -168,7 +168,7 @@
     margin-left: 8%;
   }
   .feed-btn button {
-    margin-top: 74px !important;
+    margin-top: 45px !important;
     margin-left: -110% !important;
     width: 150%;
     height: 55px;
