@@ -37,7 +37,7 @@ const FeedsViews = () => {
   }, []);
 
   useEffect(() => {
-    fetch('https://rimhub.in/api/forums')
+    fetch('https://web.rimhub.in/api/forums')
       .then((response) => response.json())
       .then((data) => {
         setForums(data.data);
